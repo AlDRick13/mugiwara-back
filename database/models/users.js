@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     /**
@@ -65,6 +65,6 @@ module.exports = (sequelize, DataTypes) => {
         attributes: {exclude: ['password']}
       }
     }
-  });
-  return Users;
-};
+  })
+  return Users
+}

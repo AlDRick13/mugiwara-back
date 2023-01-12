@@ -1,8 +1,9 @@
 module.exports = {
   'env': {
-    'node': true,
+    'browser': true,
     'commonjs': true,
-    'es2021': true
+    'es2021': true,
+    'node': true,
   },
   'extends': 'eslint:recommended',
   'overrides': [
@@ -10,37 +11,21 @@ module.exports = {
   'parserOptions': {
     'ecmaVersion': 'latest'
   },
-  'ignorePatterns': [
-    '/database/config/config.js',
-    '/database/models/',
-    'package.json',
-    'package-lock.json',
-  ],
   'rules': {
-    'no-unused-vars': [
-      'warn', {
-        'vars': 'all',
-        'args': 'after-used',
-        'ignoreRestSiblings': true
-      }],
-    'padding-line-between-statements': [
-      'error',
-      { 'blankLine': 'any', 'prev': '*', 'next': '*' },
-    ],
     'indent': [
       'error',
       2
     ],
     'linebreak-style': [
-      'off',
-      'unix'
+      'error',
+      'windows'
     ],
     'quotes': [
       'error',
       'single'
     ],
     'semi': [
-      'warn',
+      'error',
       'never'
     ]
   }

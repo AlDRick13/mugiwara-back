@@ -21,13 +21,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     first_name: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     last_name: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     email: {
       allowNull: false,
-      unique: true, 
+      unique: true,
       type: DataTypes.STRING,
       validate: {
         isEmail: true,
@@ -35,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     username: {
-      allowNull: false, 
+      allowNull: false,
       unique: true,
       type: DataTypes.STRING
     },
@@ -53,16 +55,16 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Users',
     tableName: 'users',
     underscored: true,
-    timestamps: true, 
+    timestamps: true,
     scopes: {
       public_view: {
-        attributes: ['id','first_name','last_name','email','username', 'email_verified', 'token']
-      }, 
+        attributes: ['id', 'first_name', 'last_name', 'email', 'username', 'email_verified', 'token']
+      },
       no_timestamps: {
-        attributes: {exclude: ['created_at', 'updated_at']}
-      }, 
+        attributes: { exclude: ['created_at', 'updated_at'] }
+      },
       no_password: {
-        attributes: {exclude: ['password']}
+        attributes: { exclude: ['password'] }
       }
     }
   })

@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 const {
   Model
-} = require('sequelize')
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Publications_types extends Model {
+  class city extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,36 +13,48 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Publications_types.init({
+  city.init({
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    name: {
+    country_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      type: DataTypes.STRING,
-      unique: true
+
+      /* Discutir con Aldo y esperar a que haga merge del modelo Contruies
+      //!foreigKey: true,
+      //!references: {
+        //!model: 'Tabla de paises',
+        //!key: 'id'
+      //!},
+      //!onUpdate: 'CASCADE', 
+      //!onDelete: 'SET NULL'
+      */
     },
-    description: {
-      type: DataTypes.TEXT
-    }
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     sequelize,
-    modelName: 'Publications_types',
-    tableName: 'publications_types',
+    modelName: 'city',
+    tableName: 'City',
     underscored: true,
     timestamps: true,
     scopes: {
       public_view: {
-        attributes: ['id', 'name', 'description']
+        attributes: ['id', 'name']
+      },
+      no_foreignKey: {
+        attributes: { exclude: ['country_id'] }
       },
       no_timestamps: {
         attributes: { exclude: ['created_at', 'updated_at'] }
       }
     }
   });
-
-  return Publications_types
-}
+  return city;
+};

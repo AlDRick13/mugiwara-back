@@ -6,7 +6,7 @@ module.exports = {
     try {
       await queryInterface.createTable('Roles', {
 
-        id: { // usando Serial
+        id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,

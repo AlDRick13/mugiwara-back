@@ -1,10 +1,9 @@
-//migration de users creada por sequelize-cli y editada por nosotros
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('Roles', {
+      await queryInterface.createTable('Countries', {
 
         id: {
           allowNull: false,
@@ -14,7 +13,6 @@ module.exports = {
         },
         name: {
           unique: true,
-
           allowNull: false,
           type: Sequelize.TEXT
         },
@@ -40,7 +38,7 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('Roles', { transaction });
+      await queryInterface.dropTable('Countries', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();

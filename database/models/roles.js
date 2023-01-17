@@ -14,10 +14,33 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Roles.init({
-    name: DataTypes.TEXT
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true
+    },
   }, {
     sequelize,
-    modelName: 'Roles',
+    modelName: 'Users',  // Hacemos la diferencia del modelo
+    tableName: 'users',  // y la tabla en la DB para ser explicitos
+    underscored: true,
+    timestamps: true,
+    // Los scopes son útiles para estandarizar dónde se regresa información  
+    // y minimizar que se nos escape algo
+    scopes: {
+      public_view: {
+        attributes: ['id', 'coutry_id']
+      },
+      no_timestamps: {
+        attributes: { exclude: ['created_at', 'updated_at'] }
+      },
+    },
   });
   return Roles;
 };

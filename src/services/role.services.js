@@ -1,7 +1,7 @@
-const RoleController = require('../controllers/role.controllers');
+const RolesController = require('../controllers/role.controllers');
 const { getPagination, getPagingData } = require('../../utils/pagination');
 
-const roleController = new RoleController();
+const rolesController = new RolesController();
 
 const getRoles = async (request, response, next) => {
     try {
@@ -12,20 +12,22 @@ const getRoles = async (request, response, next) => {
         query.limit = limit;
         query.offset = offset;
 
-        let roles = await roleController.findAndCount(query);
+        let roles = await rolesController.findAndCount(query);
         const results = getPagingData(roles, page, limit);
-        return response.json({ results: results });
+        return response.json({ results });
 
     } catch (error) {
         next(error);
     }
 };
 
-const addRole = async (request, response, next) => {
+const addRole = async (req, res, next) => {
+    console.log("BODY", req.body);
+    const { name } = req.body;
     try {
-        let { body } = request;
-        let role = await roleController.createRole(body);
-        return response.status(201).json({ results: publication });
+        // let { body } = req;
+        let role = await rolesController.createRole(name);
+        return res.status(201).json({ results: role });
     } catch (error) {
         next(error);
     }
@@ -34,8 +36,8 @@ const addRole = async (request, response, next) => {
 const getRole = async (request, response, next) => {
     try {
         let { id } = request.params;
-        let roles = await roleController.getRoleOr404(id);
-        return response.json({ results: roles });
+        let role = await rolesController.getRoleOr404(id);
+        return response.json({ results: role });
     } catch (error) {
         next(error);
     }
@@ -45,7 +47,7 @@ const updateRole = async (request, response, next) => {
     try {
         let { id } = request.params;
         let { body } = request;
-        let role = await roleController.updateRole(id, body);
+        let role = await rolesController.updateRole(id, body);
         return response.json({ results: role });
     } catch (error) {
         next(error);
@@ -55,7 +57,7 @@ const updateRole = async (request, response, next) => {
 const removeRole = async (request, response, next) => {
     try {
         let { id } = request.params;
-        let role = await roleController.removeRole(id);
+        let role = await rolesController.removeRole(id);
         return response.json({ results: role, message: 'removed' });
     } catch (error) {
         next(error);

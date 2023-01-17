@@ -2,14 +2,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const transaction = await queryInterface.sequelize.transaction()
+    const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.createTable('votes', {
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.UUID
+          type: Sequelize.BIGINT
         },
         publication_id: {
           type: Sequelize.UUID,
@@ -45,20 +45,20 @@ module.exports = {
         }
       }, { transaction });
 
-      await transaction.commit()
+      await transaction.commit();
     } catch (error) {
-      await transaction.rollback()
-      throw error
+      await transaction.rollback();
+      throw error;
     }
   },
   down: async (queryInterface, Sequelize) => {
-    const transaction = await queryInterface.sequelize.transaction()
+    const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.dropTable('votes', { transaction });
-      await transaction.commit()
+      await transaction.commit();
     } catch (error) {
-      await transaction.rollback()
-      throw error
+      await transaction.rollback();
+      throw error;
     }
   }
 };

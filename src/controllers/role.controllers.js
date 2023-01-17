@@ -2,7 +2,7 @@ const models = require('../../database/models');
 const { Op, INTEGER } = require('sequelize');
 const { CustomError } = require('../../utils/custom_error');
 
-class RolesService {
+class RolesController {
 
     constructor() {
 
@@ -30,11 +30,11 @@ class RolesService {
         return data;
     }
 
-    async createRole({ name }) {
+    async createRole(name) {
+        console.log(name);
         const transaction = await models.sequelize.transaction();
         try {
             let data = await models.Roles.create({
-                id: INTEGER,
                 name,
             }, { transaction });
 
@@ -100,4 +100,4 @@ class RolesService {
 
 }
 
-module.exports = RolesService;
+module.exports = RolesController;

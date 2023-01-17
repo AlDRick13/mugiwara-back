@@ -23,19 +23,18 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       allowNull: false,
       type: DataTypes.STRING,
-      unique: true
     },
   }, {
     sequelize,
-    modelName: 'Users',  // Hacemos la diferencia del modelo
-    tableName: 'users',  // y la tabla en la DB para ser explicitos
+    modelName: 'Roles',  // Hacemos la diferencia del modelo
+    tableName: 'Roles',  // y la tabla en la DB para ser explicitos
     underscored: true,
     timestamps: true,
     // Los scopes son útiles para estandarizar dónde se regresa información  
     // y minimizar que se nos escape algo
     scopes: {
       public_view: {
-        attributes: ['id', 'coutry_id']
+        attributes: ['id', 'name']
       },
       no_timestamps: {
         attributes: { exclude: ['created_at', 'updated_at'] }

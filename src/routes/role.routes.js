@@ -6,7 +6,7 @@ const {
     addRole,
     getRole,
     updateRole,
-    removeRole } = require('../services/role.services');
+    removeRole } = require('../controllers/role.controllers');
 
 router.get('/', getRoles);
 router.post('/', addRole);

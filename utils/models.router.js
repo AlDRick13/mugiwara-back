@@ -5,6 +5,8 @@ const routesCities = require('../src/routes/city.routes');
 const routesVotes = require('../src/routes/vote.routes');
 const routesRoles = require('../src/routes/role.routes');
 const routesCountries = require('../src/routes/country.routes');
+const routesProfiles = require('../src/routes/profile.routes');
+
 
 function routerModels(app) {
   const router = express.Router();
@@ -16,6 +18,7 @@ function routerModels(app) {
   router.use('/votes', routesVotes);
   router.use('/roles', routesRoles);
   router.use('/countries', routesCountries);
+  router.use('/profiles', routesProfiles);
 
   // other models here
 }

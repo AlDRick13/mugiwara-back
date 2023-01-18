@@ -1,103 +1,73 @@
-const models = require('../../database/models');
-const { Op, INTEGER } = require('sequelize');
-const { CustomError } = require('../../utils/custom_error');
+const RolesService = require('../services/role.services');
+const { getPagination, getPagingData } = require('../../utils/pagination');
 
-class RolesController {
+const rolesService = new RolesService();
 
-    constructor() {
+const getRoles = async (request, response, next) => {
+    try {
+        let query = request.query;
+        let { page, size } = query;
 
+        const { limit, offset } = getPagination(page, size, '10');
+        query.limit = limit;
+        query.offset = offset;
+
+        let roles = await rolesService.findAndCount(query);
+        const results = getPagingData(roles, page, limit);
+        return response.json({ results });
+
+    } catch (error) {
+        next(error);
     }
+};
 
-    async findAndCount(query) {
-        const options = {
-            where: {},
-        };
-
-        const { limit, offset } = query;
-        if (limit && offset) {
-            options.limit = limit;
-            options.offset = offset;
-        }
-
-        const { name } = query;
-        if (name) {
-            options.where.name = { [Op.iLike]: `%${name}%` };
-        }
-
-        options.distinct = true;
-
-        const data = await models.Roles.findAndCountAll(options);
-        return data;
+const addRole = async (req, res, next) => {
+    console.log("BODY", req.body);
+    const { name } = req.body;
+    try {
+        // let { body } = req;
+        let role = await rolesService.createRole(name);
+        return res.status(201).json({ results: role });
+    } catch (error) {
+        next(error);
     }
+};
 
-    async createRole(name) {
-        console.log(name);
-        const transaction = await models.sequelize.transaction();
-        try {
-            let data = await models.Roles.create({
-                name,
-            }, { transaction });
-
-            await transaction.commit();
-            return data;
-        } catch (error) {
-            await transaction.rollback();
-            throw error;
-        }
+const getRole = async (request, response, next) => {
+    try {
+        let { id } = request.params;
+        let role = await rolesService.getRoleOr404(id);
+        return response.json({ results: role });
+    } catch (error) {
+        next(error);
     }
-    //Return Instance if we do not converted to json (or raw:true)
-    async getRoleOr404(id) {
-        let data = await models.Roles.findByPk(id);
+};
 
-        if (!data) throw new CustomError('Not found role', 404, 'Not Found');
-
-        return data;
+const updateRole = async (request, response, next) => {
+    try {
+        let { id } = request.params;
+        let { body } = request;
+        let role = await rolesService.updateRole(id, body);
+        return response.json({ results: role });
+    } catch (error) {
+        next(error);
     }
+};
 
-    //Return not an Instance raw:true | we also can converted to Json instead
-    async getRole(id) {
-        let data = await models.Roles.findByPk(id, { raw: true });
-        return data;
+const removeRole = async (request, response, next) => {
+    try {
+        let { id } = request.params;
+        let role = await rolesService.removeRole(id);
+        return response.json({ results: role, message: 'removed' });
+    } catch (error) {
+        next(error);
     }
+};
 
-    async updateRole(id, { name }) {
-        const transaction = await models.sequelize.transaction();
-        try {
-            let role = await models.Roles.findByPk(id);
-
-            if (!role) throw new CustomError('Not found role', 404, 'Not Found');
-
-            let data = await role.update({
-                name
-            }, { transaction });
-
-            await transaction.commit();
-
-            return data;
-        } catch (error) {
-            await transaction.rollback();
-            throw error;
-        }
-    }
-
-    async removeRole(id) {
-        const transaction = await models.sequelize.transaction();
-        try {
-            let data = await models.Roles.findByPk(id);
-
-            if (!data) throw new CustomError('Not found role', 404, 'Not Found');
-
-            await data.destroy({ transaction });
-
-            await transaction.commit();
-
-            return data;
-        } catch (error) {
-            await transaction.rollback();
-            throw error;
-        }
-    }
-
-}
-
-module.exports = RolesController;
+module.exports = {
+    getRoles,
+    addRole,
+    getRole,
+    updateRole,
+    removeRole
+};

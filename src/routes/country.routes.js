@@ -6,7 +6,7 @@ const {
     addCountry,
     getCountry,
     updateCountry,
-    removeCountry } = require('../services/country.services');
+    removeCountry } = require('../controllers/country.controllers');
 
 router.get('/', getCountries);
 router.post('/', addCountry);

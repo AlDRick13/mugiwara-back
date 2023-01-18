@@ -6,7 +6,7 @@ const {
   addUser,
   getUser,
   updateUser,
-  removeUser } = require('../services/user.services')
+  removeUser } = require('../controllers/user.controllers')
 
 router.get('/', getUsers)
 router.post('/', addUser)

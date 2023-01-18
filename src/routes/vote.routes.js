@@ -6,7 +6,7 @@ const {
     addVote,
     getVote,
     updateVote,
-    removeVote } = require('../services/vote.services')
+    removeVote } = require('../controllers/vote.controllers')
 
 router.get('/', getVotes)
 router.post('/', addVote)

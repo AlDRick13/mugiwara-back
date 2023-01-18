@@ -6,7 +6,7 @@ const {
     addCity,
     getCity,
     updateCity,
-    removeCity } = require('../services/city.services')
+    removeCity } = require('../controllers/city.controllers')
 
 router.get('/', getCities)
 router.post('/', addCity)

@@ -1,5 +1,5 @@
-"use strict";
-require('dotenv').config();
+'use strict'
+require('dotenv').config()
 module.exports = {
   development: {
     use_env_variable: 'DATABASE_URI_DEV',
@@ -7,9 +7,9 @@ module.exports = {
       timestamps: true,
       underscored: true,
       underscoredAll: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
-      deletedAt: 'deleted_at',
+      createdAt:'created_at',
+      updatedAt:'updated_at',
+      deletedAt:'deleted_at',
     },
     dialectOptions: {
       useUTC: true,
@@ -22,14 +22,14 @@ module.exports = {
       timestamps: true,
       underscored: true,
       underscoredAll: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
-      deletedAt: 'deleted_at',
+      createdAt:'created_at',
+      updatedAt:'updated_at',
+      deletedAt:'deleted_at',
     },
     dialectOptions: {
       useUTC: true,
     },
-    timezone: 'UTC'
+    timezone:'UTC'
   },
   production: {
     use_env_variable: 'DATABASE_URI_PROD',
@@ -44,10 +44,10 @@ module.exports = {
       timestamps: true,
       underscored: true,
       underscoredAll: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
-      deletedAt: 'deleted_at',
+      createdAt:'created_at',
+      updatedAt:'updated_at',
+      deletedAt:'deleted_at',
     },
-    timezone: 'UTC'
+    timezone:'UTC'
   }
-};
+}

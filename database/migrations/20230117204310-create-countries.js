@@ -1,9 +1,11 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('Countries', {
+      await queryInterface.createTable('countries', {
 
         id: {
           allowNull: false,
@@ -38,7 +40,7 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('Countries', { transaction });
+      await queryInterface.dropTable('countries', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();

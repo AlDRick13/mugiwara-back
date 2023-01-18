@@ -1,93 +1,71 @@
-const models = require('../../database/models')
-const { Op } = require('sequelize')
-const { CustomError } = require('../../utils/custom_error')
-const uuid = require('uuid')
+const CityServices = require('../services/publication.services')
+const { getPagination, getPagingData } = require('../../utils/pagination')
 
-class CityController {
+const cityServices = new CityServices()
 
-    constructor() { }
+const getCities = async (request, response, next) => {
+    try {
+        let query = request.query
+        let { page, size } = query
 
-    async findAndCount(query) {
-        const options = {
-            where: {},
-        }
-        const { limit, offset } = query
-        if (limit && offset) {
-            options.limit = limit
-            options.offset = offset
-        }
+        const { limit, offset } = getPagination(page, size, '10')
+        query.limit = limit
+        query.offset = offset
 
-        //No sabemos para que funciona esa parte del codigo.
-        const { name } = query
-        if (name) {
-            options.where.name = { [Op.iLike]: `%${name}%` }
-        }
+        let Cities = await cityServices.findAndCount(query)
+        const results = getPagingData(Cities, page, limit)
+        return response.json({ results: results })
 
-        //Necesario para el findAndCountAll de Sequelize
-        options.distinct = true
-
-        const city = await models.city.findAndCountAll(options)
-        return city
-    }
-    async createCity({ name, country_id }) {
-        const transaction = await models.sequelize.transaction()
-        try {
-            let newCity = await models.city.create({
-                id: uuid.v4(),
-                name,
-                country_id
-            }, { transaction })
-
-            await transaction.commit()
-            return newCity
-        } catch (error) {
-            await transaction.rollback()
-            throw error
-        }
-    }
-    //Return Instance if we do not converted to json (or raw:true)
-    async getCityOr404(id) {
-        let city = await models.city.findByPk(id)
-        if (!city) throw new CustomError('Not found City', 404, 'Not Found')
-        return city
-    }
-    //Return not an Instance raw:true | we also can converted to Json instead
-    async getCity(id) {
-        let city = await models.city.findByPk(id, { raw: true })
-        return city
-    }
-    async updateCity(id, { name }) {
-        const transaction = await models.sequelize.transaction()
-        try {
-            let city = await models.city.findByPk(id)
-
-            if (!city) throw new CustomError('Not found City', 404, 'Not Found')
-            let updatedCity = await city.update({
-                name
-            }, { transaction })
-            await transaction.commit()
-
-            return updatedCity[0]
-        } catch (error) {
-            await transaction.rollback()
-            throw error
-        }
-    }
-    async removeCity(id) {
-        const transaction = await models.sequelize.transaction()
-        try {
-            let city = await models.city.findByPk(id)
-
-            if (!city) throw new CustomError('Not found City', 404, 'Not Found')
-            await city.destroy({ transaction })
-            await transaction.commit()
-            return city[0]
-
-        } catch (error) {
-            await transaction.rollback()
-            throw error
-        }
+    } catch (error) {
+        next(error)
     }
 }
 
-module.exports = CityController
+const addCity = async (request, response, next) => {
+    try {
+        let { body } = request
+        let city = await cityServices.createPublication(body)
+        return response.status(201).json({ results: city })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getCity = async (request, response, next) => {
+    try {
+        let { id } = request.params
+        let cities = await cityServices.getPublicationOr404(id)
+        return response.json({ results: cities })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const updateCity = async (request, response, next) => {
+    try {
+        let { id } = request.params
+        let { body } = request
+        let city = await cityServices.updatePublication(id, body)
+        return response.json({ results: city })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const removeCity = async (request, response, next) => {
+    try {
+        let { id } = request.params
+        let city = await cityServices.removePublication(id)
+        return response.json({ results: city, message: 'removed' })
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {
+    getCities,
+    addCity,
+    getCity,
+    updateCity,
+    removeCity
+}

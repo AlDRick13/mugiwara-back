@@ -1,71 +1,103 @@
-const UserController = require('../controllers/user.controllers')
-const { getPagination, getPagingData } = require('../../utils/pagination')
+const models = require('../../database/models')
+const { Op } = require('sequelize')
+const { CustomError } = require('../../utils/custom_error')
+const uuid = require('uuid')
 
-const userController = new UserController()
+class UserServices {
 
-const getUsers = async (request, response, next) => {
-  try {
-    let query = request.query
-    let { page, size } = query
+  constructor() { }
 
-    const { limit, offset } = getPagination(page, size, '10')
-    query.limit = limit
-    query.offset = offset
+  async findAndCount(query) {
+    const options = {
+      where: {},
+    }
+    const { limit, offset } = query
+    if (limit && offset) {
+      options.limit = limit
+      options.offset = offset
+    }
 
-    let users = await userController.findAndCount(query)
-    const results = getPagingData(users, page, limit)
-    return response.json({ results: results })
+    //No sabemos para que funciona esa parte del codigo.
+    const { first_name } = query
+    if (first_name) {
+      options.where.name = { [Op.iLike]: `%${first_name}%` }
+    }
 
-  } catch (error) {
-    next(error)
+    //Necesario para el findAndCountAll de Sequelize
+    options.distinct = true
+
+    const users = await models.Users.findAndCountAll(options)
+    return users
+  }
+
+  async createUser({ first_name, last_name, email, username, password, email_verified, token }) {
+    const transaction = await models.sequelize.transaction()
+    try {
+      let newUser = await models.Users.create({
+        id: uuid.v4(),
+        first_name,
+        last_name,
+        email,
+        username,
+        password,
+        email_verified,
+        token
+      }, { transaction })
+
+      await transaction.commit()
+      return newUser
+    } catch (error) {
+      await transaction.rollback()
+      throw error
+    }
+  }
+  //Return Instance if we do not converted to json (or raw:true)
+  async getUserOr404(id) {
+    let user = await models.Users.findByPk(id)
+    if (!user) throw new CustomError('Not found User', 404, 'Not Found')
+    return user
+  }
+  //Return not an Instance raw:true | we also can converted to Json instead
+  async getUser(id) {
+    let user = await models.Users.findByPk(id, { raw: true })
+    return user
+  }
+  async updateUser(id, { first_name, last_name, email, username, password }) {
+    const transaction = await models.sequelize.transaction()
+    try {
+      let user = await models.Users.findByPk(id)
+
+      if (!user) throw new CustomError('Not found user', 404, 'Not Found')
+      let updatedUser = await user.update({
+        first_name,
+        last_name,
+        email,
+        username,
+        password
+      }, { transaction })
+      await transaction.commit()
+
+      return updatedUser[0]
+    } catch (error) {
+      await transaction.rollback()
+      throw error
+    }
+  }
+  async removeUser(id) {
+    const transaction = await models.sequelize.transaction()
+    try {
+      let user = await models.Users.findByPk(id)
+
+      if (!user) throw new CustomError('Not found user', 404, 'Not Found')
+      await user.destroy({ transaction })
+      await transaction.commit()
+      return user[0]
+
+    } catch (error) {
+      await transaction.rollback()
+      throw error
+    }
   }
 }
 
-const addUser = async (request, response, next) => {
-  try {
-    let { body } = request
-    let user = await userController.createUser(body)
-    return response.status(201).json({ results: user })
-  } catch (error) {
-    next(error)
-  }
-}
-
-const getUser = async (request, response, next) => {
-  try {
-    let { id } = request.params
-    let users = await userController.getUserOr404(id)
-    return response.json({ results: users })
-  } catch (error) {
-    next(error)
-  }
-}
-
-const updateUser = async (request, response, next) => {
-  try {
-    let { id } = request.params
-    let { body } = request
-    let user = await userController.updateUser(id, body)
-    return response.json({ results: user })
-  } catch (error) {
-    next(error)
-  }
-}
-
-const removeUser = async (request, response, next) => {
-  try {
-    let { id } = request.params
-    let user = await userController.removeUser(id)
-    return response.json({ results: user, message: 'removed' })
-  } catch (error) {
-    next(error)
-  }
-}
-
-module.exports = {
-  getUsers,
-  addUser,
-  getUser,
-  updateUser,
-  removeUser
-}
+module.exports = UserServices

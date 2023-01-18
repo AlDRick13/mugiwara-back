@@ -1,48 +1,32 @@
-'use strict'
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction()
     try {
-      await queryInterface.createTable('users', {
+      await queryInterface.createTable('states', {
         id: {
           allowNull: false,
+          autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.UUIDV4
+          type: Sequelize.INTEGER
         },
-        first_name: {
+        name: {
           type: Sequelize.STRING,
-          allowNull: false
-        },
-        last_name: {
-          type: Sequelize.STRING,
-          allowNull: false
-        },
-        email: {
           allowNull: false,
-          unique: true,
-          type: Sequelize.STRING,
-          validate: {
-            isEmail: true,
-            notEmpty: true
-          }
+          unique: true
         },
-        username: {
+        id_country: {
+          type: Sequelize.INTEGER,
           allowNull: false,
-          unique: true,
-          type: Sequelize.STRING
-        },
-        password: {
-          type: Sequelize.STRING,
-          //validate: {
-          //is: /^[a-z]+$/i
-          //}
-        },
-        email_verified: {
-          type: Sequelize.DATE
-        },
-        token: {
-          type: Sequelize.STRING
+
+          //!foreigKey: true,
+          //!references: {
+          //!model: 'Tabla de profile',
+          //!key: 'id'
+          //!},
+          //!onUpdate: 'CASCADE', 
+          //!onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,
@@ -54,7 +38,7 @@ module.exports = {
           type: Sequelize.DATE,
           field: 'updated_at'
         }
-      }, { transaction })
+      }, { transaction });
 
       await transaction.commit()
     } catch (error) {
@@ -66,12 +50,11 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction()
     try {
-      await queryInterface.dropTable('users', { transaction })
+      await queryInterface.dropTable('states', { transaction });
       await transaction.commit()
     } catch (error) {
       await transaction.rollback()
       throw error
     }
-
   }
-}
+};

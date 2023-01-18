@@ -33,7 +33,6 @@ class PublicationTypesServices {
         const transaction = await models.sequelize.transaction()
         try {
             let newData = await models.Publications_types.create({
-                id: uuid.v4(),
                 name,
                 description
             }, { transaction })

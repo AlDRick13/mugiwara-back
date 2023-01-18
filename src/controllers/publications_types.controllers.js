@@ -1,4 +1,4 @@
-const PublicationTypesServices = require('../controllers/publications_types.controllers')
+const PublicationTypesServices = require('../services/publications_types.services')
 const { getPagination, getPagingData } = require('../../utils/pagination')
 
 const publicationTypesServices = new PublicationTypesServices()

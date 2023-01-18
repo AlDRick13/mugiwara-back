@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class city extends Model {
+  class state extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,48 +13,46 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  city.init({
+  state.init({
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    state_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-
-      /* Discutir con Aldo y esperar a que haga merge del modelo Contruies
-      //!foreigKey: true,
-      //!references: {
-        //!model: 'Tabla de paises',
-        //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
-      */
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
+    },
+    id_country: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+
+      //!foreigKey: true,
+      //!references: {
+      //!model: 'Tabla de profile',
+      //!key: 'id'
+      //!},
+      //!onUpdate: 'CASCADE', 
+      //!onDelete: 'SET NULL'
     },
   }, {
     sequelize,
-    modelName: 'city',
-    tableName: 'City',
+    modelName: 'state',
+    tableName: 'states',  // y la tabla en la DB para ser explicitos
     underscored: true,
     timestamps: true,
+    // Los scopes son útiles para estandarizar dónde se regresa información  
+    // y minimizar que se nos escape algo
     scopes: {
       public_view: {
-        attributes: ['id', 'name']
-      },
-      no_foreignKey: {
-        attributes: { exclude: ['country_id'] }
+        attributes: ['id', 'name', 'id_country']
       },
       no_timestamps: {
         attributes: { exclude: ['created_at', 'updated_at'] }
-      }
-    }
+      },
+    },
   });
-  return city;
+  return state;
 };

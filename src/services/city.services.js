@@ -33,7 +33,6 @@ class CityServices {
         const transaction = await models.sequelize.transaction()
         try {
             let newCity = await models.city.create({
-                id: uuid.v4(),
                 name,
                 country_id
             }, { transaction })

@@ -34,7 +34,6 @@ class VotesServices {
         const transaction = await models.sequelize.transaction()
         try {
             let newVote = await models.votes.create({
-                id: uuid.v4(),
                 publication_id,
                 profile_id
             }, { transaction })

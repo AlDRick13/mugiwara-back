@@ -18,10 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.UUID
+      type: DataTypes.BIGINT
     },
     publication_id: {
-      type: DataTypes.UUID,
+      type: DataTypes.UUIDV4,
       allowNull: false,
 
       //!foreigKey: true,
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       //!onDelete: 'SET NULL'
     },
     profile_id: {
-      type: DataTypes.UUID,
+      type: DataTypes.UUIDV4,
       allowNull: false,
 
       //!foreigKey: true,

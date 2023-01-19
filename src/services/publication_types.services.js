@@ -31,12 +31,13 @@ class PublicationsTypesService {
         return publicationType;
     }
 
-    async createPublicationType(name) {
+    async createPublicationType({ name, description }) {
         const transaction = await models.sequelize.transaction();
         try {
             let newPublicationType = await models.Publications_types.create({
                 //id: uuid4() --> aquí se debe usar el uuid maker si es que se usa
                 name,
+                description
             }, { transaction });
 
             await transaction.commit();

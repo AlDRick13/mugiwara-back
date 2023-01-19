@@ -22,11 +22,9 @@ const getStates = async (request, response, next) => {
 };
 
 const addState = async (req, res, next) => {
-    console.log("BODY", req.body);
-    const { name } = req.body;
     try {
-        // let { body } = req;
-        let role = await stateService.createRole(name);
+        const body = req.body;
+        let role = await stateService.createState(body);
         return res.status(201).json({ results: role });
     } catch (error) {
         next(error);
@@ -36,7 +34,7 @@ const addState = async (req, res, next) => {
 const getState = async (request, response, next) => {
     try {
         let { id } = request.params;
-        let role = await stateService.getRoleOr404(id);
+        let role = await stateService.getStateOr404(id);
         return response.json({ results: role });
     } catch (error) {
         next(error);
@@ -47,7 +45,7 @@ const updateState = async (request, response, next) => {
     try {
         let { id } = request.params;
         let { body } = request;
-        let role = await stateService.updateRole(id, body);
+        let role = await stateService.updateState(id, body);
         return response.json({ results: role });
     } catch (error) {
         next(error);
@@ -57,7 +55,7 @@ const updateState = async (request, response, next) => {
 const removeState = async (request, response, next) => {
     try {
         let { id } = request.params;
-        let role = await stateService.removeRole(id);
+        let role = await stateService.removeState(id);
         return response.json({ results: role, message: 'removed' });
     } catch (error) {
         next(error);

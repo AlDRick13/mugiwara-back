@@ -22,10 +22,8 @@ const getCountries = async (request, response, next) => {
 };
 
 const addCountry = async (req, res, next) => {
-    console.log("BODY", req.body);
-    const body = req.body;
     try {
-        // let { body } = req;
+        const body = req.body;
         let country = await countriesService.createCountry(body);
         return res.status(201).json({ results: country });
     } catch (error) {

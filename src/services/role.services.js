@@ -30,8 +30,7 @@ class RolesService {
         return data;
     }
 
-    async createRole(name) {
-        console.log(name);
+    async createRole({ name }) {
         const transaction = await models.sequelize.transaction();
         try {
             let data = await models.Roles.create({

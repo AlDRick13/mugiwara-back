@@ -22,11 +22,9 @@ const getProfiles = async (request, response, next) => {
 };
 
 const addProfile = async (req, res, next) => {
-    console.log("BODY", req.body);
-    const { name } = req.body;
     try {
-        // let { body } = req;
-        let profile = await profilesService.createProfile(name);
+        const body = req.body;
+        let profile = await profilesService.createProfile(body);
         return res.status(201).json({ results: profile });
     } catch (error) {
         next(error);
@@ -47,7 +45,7 @@ const updateProfile = async (request, response, next) => {
     try {
         let { id } = request.params;
         let { body } = request;
-        let profile = await countriesService.updateProfile(id, body);
+        let profile = await profilesService.updateProfile(id, body);
         return response.json({ results: profile });
     } catch (error) {
         next(error);

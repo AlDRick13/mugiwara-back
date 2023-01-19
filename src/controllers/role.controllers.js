@@ -22,11 +22,9 @@ const getRoles = async (request, response, next) => {
 };
 
 const addRole = async (req, res, next) => {
-    console.log("BODY", req.body);
-    const { name } = req.body;
     try {
-        const { name } = req.body;
-        let role = await rolesService.createRole(name);
+        const body = req.body;
+        let role = await rolesService.createRole(body);
         return res.status(201).json({ results: role });
     } catch (error) {
         next(error);

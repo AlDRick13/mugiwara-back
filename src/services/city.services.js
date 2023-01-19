@@ -1,8 +1,8 @@
 const models = require('../../database/models');
-const { Op } = require('sequelize');
+const { Op, INTEGER } = require('sequelize');
 const { CustomError } = require('../../utils/custom_error');
 
-class CountriesService {
+class CityServices {
 
     constructor() {
 
@@ -26,16 +26,16 @@ class CountriesService {
 
         options.distinct = true;
 
-        const data = await models.Countries.findAndCountAll(options);
+        const data = await models.city.findAndCountAll(options);
         return data;
     }
 
-    async createCountry(name) {
-        console.log(name);
+    async createCity({ name, state_id }) {
         const transaction = await models.sequelize.transaction();
         try {
-            let data = await models.Countries.create({
+            let data = await models.city.create({
                 name,
+                state_id
             }, { transaction });
 
             await transaction.commit();
@@ -46,29 +46,30 @@ class CountriesService {
         }
     }
     //Return Instance if we do not converted to json (or raw:true)
-    async getCountryOr404(id) {
-        let data = await models.Countries.findByPk(id);
+    async getCityOr404(id) {
+        let data = await models.city.findByPk(id);
 
-        if (!data) throw new CustomError('Not found country', 404, 'Not Found');
+        if (!data) throw new CustomError('Not found city', 404, 'Not Found');
 
         return data;
     }
 
     //Return not an Instance raw:true | we also can converted to Json instead
-    async getCountry(id) {
-        let data = await models.Countries.findByPk(id, { raw: true });
+    async getCity(id) {
+        let data = await models.city.findByPk(id, { raw: true });
         return data;
     }
 
-    async updateCountry(id, { name }) {
+    async updateCity(id, { name, state_id }) {
         const transaction = await models.sequelize.transaction();
         try {
-            let country = await models.Countries.findByPk(id);
+            let city = await models.city.findByPk(id);
 
-            if (!country) throw new CustomError('Not found country', 404, 'Not Found');
+            if (!city) throw new CustomError('Not found city', 404, 'Not Found');
 
-            let data = await country.update({
-                name
+            let data = await city.update({
+                name,
+                state_id
             }, { transaction });
 
             await transaction.commit();
@@ -80,12 +81,12 @@ class CountriesService {
         }
     }
 
-    async removeCountry(id) {
+    async removeCity(id) {
         const transaction = await models.sequelize.transaction();
         try {
-            let data = await models.Countries.findByPk(id);
+            let data = await models.city.findByPk(id);
 
-            if (!data) throw new CustomError('Not found country', 404, 'Not Found');
+            if (!data) throw new CustomError('Not found city', 404, 'Not Found');
 
             await data.destroy({ transaction });
 
@@ -100,4 +101,4 @@ class CountriesService {
 
 }
 
-module.exports = CountriesService;
+module.exports = CityServices;

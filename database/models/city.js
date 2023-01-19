@@ -18,43 +18,34 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
-    },
-    state_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-
-      /* Discutir con Aldo y esperar a que haga merge del modelo Contruies
-      //!foreigKey: true,
-      //!references: {
-        //!model: 'Tabla de paises',
-        //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
-      */
+      type: DataTypes.INTEGER  // Puede ser Integer o BigInt -> BigInt es mejor
     },
     name: {
-      type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
+      type: DataTypes.TEXT
+    },
+    state_id: { //! Foraneo --> read migrations
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
   }, {
     sequelize,
     modelName: 'city',
-    tableName: 'cities',
+    tableName: 'cities',  // y la tabla en la DB para ser explicitos
     underscored: true,
     timestamps: true,
+    // Los scopes son útiles para estandarizar dónde se regresa información  
+    // y minimizar que se nos escape algo
     scopes: {
       public_view: {
-        attributes: ['id', 'name']
-      },
-      no_foreignKey: {
-        attributes: { exclude: ['country_id'] }
+        attributes: ['id', 'name', 'state_id']
       },
       no_timestamps: {
         attributes: { exclude: ['created_at', 'updated_at'] }
-      }
-    }
+      },
+    },
   });
+
   return city;
 };

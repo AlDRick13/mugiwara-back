@@ -8,10 +8,10 @@ module.exports = {
         id: {
           allowNull: false,
           primaryKey: true,
-          type: Sequelize.UUIDV4
+          type: Sequelize.UUID
         },
         profile_id: {
-          type: Sequelize.UUIDV4,
+          type: Sequelize.UUID,
           allowNull: false,
 
           //!foreigKey: true,

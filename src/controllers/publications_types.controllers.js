@@ -15,7 +15,6 @@ const getPublicationsTypes = async (request, response, next) => {
         let data = await publicationTypesServices.findAndCount(query)
         const results = getPagingData(data, page, limit)
         return response.json({ results: results })
-
     } catch (error) {
         next(error)
     }

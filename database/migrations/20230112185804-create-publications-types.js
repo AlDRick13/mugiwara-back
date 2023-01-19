@@ -32,12 +32,20 @@ module.exports = {
         }
       }, { transaction });
       await transaction.commit()
+
     } catch (error) {
       await transaction.rollback()
       throw error
     }
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('publications_types');
+  down: async (queryInterface, Sequelize) => {
+    const transaction = await queryInterface.sequelize.transaction();
+    try {
+      await queryInterface.dropTable('publications_types', { transaction });
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
   }
 };

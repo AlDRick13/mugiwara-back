@@ -12,7 +12,7 @@ module.exports = {
           type: Sequelize.BIGINT
         },
         publication_id: {
-          type: Sequelize.UUIDV4,
+          type: Sequelize.UUID,
           allowNull: false,
 
           //!foreigKey: true,
@@ -24,7 +24,7 @@ module.exports = {
           //!onDelete: 'SET NULL'
         },
         profile_id: {
-          type: Sequelize.UUIDV4,
+          type: Sequelize.UUID,
           allowNull: false,
 
           //!foreigKey: true,

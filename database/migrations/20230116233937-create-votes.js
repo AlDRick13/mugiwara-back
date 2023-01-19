@@ -7,9 +7,8 @@ module.exports = {
       await queryInterface.createTable('votes', {
         id: {
           allowNull: false,
-          autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.BIGINT
+          type: Sequelize.UUID
         },
         publication_id: {
           type: Sequelize.UUID,

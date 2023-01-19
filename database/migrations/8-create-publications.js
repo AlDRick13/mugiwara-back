@@ -2,25 +2,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const transaction = await queryInterface.sequelize.transaction()
+    const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.createTable('publications', {
         id: {
           allowNull: false,
           primaryKey: true,
-          type: Sequelize.UUIDV4
+          type: Sequelize.UUID
         },
         profile_id: {
-          type: Sequelize.UUIDV4,
+          type: Sequelize.UUID,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'profiles',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         title: {
           type: Sequelize.STRING,
@@ -39,13 +39,13 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'cities',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         img_url: {
           type: Sequelize.STRING
@@ -54,13 +54,13 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'publication_types',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,
@@ -74,20 +74,20 @@ module.exports = {
         }
       }, { transaction });
 
-      await transaction.commit()
+      await transaction.commit();
     } catch (error) {
-      await transaction.rollback()
-      throw error
+      await transaction.rollback();
+      throw error;
     }
   },
   down: async (queryInterface, Sequelize) => {
-    const transaction = await queryInterface.sequelize.transaction()
+    const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.dropTable('publications', { transaction });
-      await transaction.commit()
+      await transaction.commit();
     } catch (error) {
-      await transaction.rollback()
-      throw error
+      await transaction.rollback();
+      throw error;
     }
   }
 };

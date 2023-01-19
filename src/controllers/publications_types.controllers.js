@@ -1,71 +1,71 @@
-const PublicationTypesServices = require('../services/publications_types.services')
-const { getPagination, getPagingData } = require('../../utils/pagination')
+const PublicationsTypesService = require('../services/publication_types.services');
+const { getPagination, getPagingData } = require('../../utils/pagination');
 
-const publicationTypesServices = new PublicationTypesServices()
-
-const getPublicationsTypes = async (request, response, next) => {
-    try {
-        let query = request.query
-        let { page, size } = query
-
-        const { limit, offset } = getPagination(page, size, '10')
-        query.limit = limit
-        query.offset = offset
-
-        let data = await publicationTypesServices.findAndCount(query)
-        const results = getPagingData(data, page, limit)
-        return response.json({ results: results })
-
-    } catch (error) {
-        next(error)
-    }
-}
-
-const addPublicationTypes = async (request, response, next) => {
-    try {
-        let { body } = request
-        let data = await publicationTypesServices.createPublication(body)
-        return response.status(201).json({ results: data })
-    } catch (error) {
-        next(error)
-    }
-}
+const publicationsTypesService = new PublicationsTypesService();
 
 const getPublicationTypes = async (request, response, next) => {
     try {
-        let { id } = request.params
-        let data = await publicationTypesServices.getPublicationOr404(id)
-        return response.json({ results: data })
-    } catch (error) {
-        next(error)
-    }
-}
+        let query = request.query;
+        let { page, size } = query;
 
-const updatePublicationTypes = async (request, response, next) => {
-    try {
-        let { id } = request.params
-        let { body } = request
-        let data = await publicationTypesServices.updatePublication(id, body)
-        return response.json({ results: data })
-    } catch (error) {
-        next(error)
-    }
-}
+        const { limit, offset } = getPagination(page, size, '10');
+        query.limit = limit;
+        query.offset = offset;
 
-const removePublicationTypes = async (request, response, next) => {
-    try {
-        let { id } = request.params
-        let data = await publicationTypesServices.removePublication(id)
-        return response.json({ results: data, message: 'removed' })
+        let publicationsTypes = await publicationsTypesService.findAndCount(query);
+        const results = getPagingData(publicationsTypes, page, limit);
+        return response.json({ results: results });
+
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
+
+const addPublicationType = async (request, response, next) => {
+    try {
+        const body = request.body;
+        let publicationType = await publicationsTypesService.createPublicationType(body);
+        return response.status(201).json({ results: publicationType });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getPublicationType = async (request, response, next) => {
+    try {
+        let { id } = request.params;
+        let publicationsTypes = await publicationsTypesService.getPublicationTypeOr404(id);
+        return response.json({ results: publicationsTypes });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const updatePublicationType = async (request, response, next) => {
+    try {
+        let { id } = request.params;
+        let { body } = request;
+        let publicationType = await publicationsTypesService.updatePublicationType(id, body);
+        return response.json({ results: publicationType });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const removePublicationType = async (request, response, next) => {
+    try {
+        let { id } = request.params;
+        let publicationType = await publicationsTypesService.removePublicationType(id);
+        return response.json({ results: publicationType, message: 'removed' });
+    } catch (error) {
+        next(error);
+    }
+};
 
 module.exports = {
-    getPublicationsTypes,
-    addPublicationTypes,
     getPublicationTypes,
-    updatePublicationTypes,
-    removePublicationTypes
-}
+    addPublicationType,
+    getPublicationType,
+    updatePublicationType,
+    removePublicationType
+};

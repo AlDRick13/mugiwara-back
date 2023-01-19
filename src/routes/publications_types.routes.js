@@ -1,17 +1,17 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
 const {
-    getPublicationsTypes,
-    addPublicationTypes,
-    getPublicationTypes,
-    updatePublicationTypes,
-    removePublicationTypes } = require('../controllers/publications_types.controllers')
+  getPublicationTypes,
+  addPublicationType,
+  getPublicationType,
+  updatePublicationType,
+  removePublicationType } = require('../controllers/publications_types.controllers');
 
-router.get('/', getPublicationsTypes)
-router.post('/', addPublicationTypes)
-router.get('/:id', getPublicationTypes)
-router.put('/:id', updatePublicationTypes)
-router.delete('/:id', removePublicationTypes)
+router.get('/', getPublicationTypes);
+router.post('/', addPublicationType);
+router.get('/:id', getPublicationType);
+router.put('/:id', updatePublicationType);
+router.delete('/:id', removePublicationType);
 
-module.exports = router
+module.exports = router;

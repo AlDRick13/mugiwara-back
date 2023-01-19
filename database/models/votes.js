@@ -11,43 +11,44 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      votes.belongsTo(models.publications, { as: 'publications', foreignKey: 'publication_id' })
+      votes.belongsTo(models.Profiles, { as: 'Profiles', foreignKey: 'profile_id' })
     }
   }
   votes.init({
     id: {
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.BIGINT
+      type: DataTypes.UUIDV4
     },
     publication_id: {
       type: DataTypes.UUIDV4,
       allowNull: false,
 
-      //!foreigKey: true,
-      //!references: {
-      //!model: 'Tabla de publication',
-      //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
+      foreigKey: true,
+      references: {
+        model: 'publications',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     },
     profile_id: {
       type: DataTypes.UUIDV4,
       allowNull: false,
 
-      //!foreigKey: true,
-      //!references: {
-      //!model: 'Tabla de profile',
-      //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
+      foreigKey: true,
+      references: {
+        model: 'profiles',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     },
   }, {
     sequelize,
     modelName: 'votes',
-    tableName: 'Votes',
+    tableName: 'votes',
     underscored: true,
     timestamps: true,
     scopes: {

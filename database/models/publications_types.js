@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 const {
   Model
-} = require('sequelize')
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Publications_types extends Model {
     /**
@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Publications_types.hasMany(models.publications, { as: 'publications_types', foreignKey: 'publication_type_id' })
     }
   }
   Publications_types.init({
@@ -18,31 +19,33 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.BIGINT  // Puede ser Integer o BigInt -> BigInt es mejor
     },
     name: {
-      allowNull: false,
+      unique: true,
       type: DataTypes.STRING,
-      unique: true
+      allowNull: false,
+
     },
     description: {
       type: DataTypes.TEXT
-    }
+    },
   }, {
     sequelize,
     modelName: 'Publications_types',
-    tableName: 'publications_types',
+    tableName: 'publication_types',  // y la tabla en la DB para ser explicitos
     underscored: true,
     timestamps: true,
+    // Los scopes son útiles para estandarizar dónde se regresa información  
+    // y minimizar que se nos escape algo
     scopes: {
       public_view: {
-        attributes: ['id', 'name', 'description']
+        attributes: ['name', 'description']
       },
       no_timestamps: {
         attributes: { exclude: ['created_at', 'updated_at'] }
-      }
-    }
+      },
+    },
   });
-
-  return Publications_types
-}
+  return Publications_types;
+};

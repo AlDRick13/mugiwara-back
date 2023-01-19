@@ -1,44 +1,41 @@
+//migration de users creada por sequelize-cli y editada por nosotros
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('votes', {
+      await queryInterface.createTable('cities', {
+
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.BIGINT
+          type: Sequelize.INTEGER  // Puede ser Integer o BigInt -> BigInt es mejor
         },
-        publication_id: {
-          type: Sequelize.UUIDV4,
+        name: {
+          unique: true,
+          allowNull: false,
+          type: Sequelize.TEXT
+        },
+        state_id: {
+          type: Sequelize.INTEGER,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de publication',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
-        },
-        profile_id: {
-          type: Sequelize.UUIDV4,
-          allowNull: false,
-
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'states',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          field: 'created_at'
+          field: 'created_at' // --> Asegurense de establecer el campo en snake_case aquí
+          // o usando created_at en vez de createdAt en el Key
         },
         updatedAt: {
           allowNull: false,
@@ -56,11 +53,14 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('votes', { transaction });
+      await queryInterface.dropTable('cities', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
       throw error;
     }
   }
-};
+}
+
+
+

@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      city.hasMany(models.publications, { as: 'city', foreignKey: 'city_id' })
+      city.belongsTo(models.state, { as: 'state', foreignKey: 'state_id' })
     }
   }
   city.init({
@@ -18,43 +20,43 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER  // Puede ser Integer o BigInt -> BigInt es mejor
+    },
+    name: {
+      unique: true,
+      allowNull: false,
+      type: DataTypes.TEXT
     },
     state_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
 
-      /* Discutir con Aldo y esperar a que haga merge del modelo Contruies
-      //!foreigKey: true,
-      //!references: {
-        //!model: 'Tabla de paises',
-        //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
-      */
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      foreigKey: true,
+      references: {
+        model: 'state',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+
     },
   }, {
     sequelize,
     modelName: 'city',
-    tableName: 'City',
+    tableName: 'cities',  // y la tabla en la DB para ser explicitos
     underscored: true,
     timestamps: true,
+    // Los scopes son útiles para estandarizar dónde se regresa información  
+    // y minimizar que se nos escape algo
     scopes: {
       public_view: {
-        attributes: ['id', 'name']
-      },
-      no_foreignKey: {
-        attributes: { exclude: ['country_id'] }
+        attributes: ['id', 'name', 'state_id']
       },
       no_timestamps: {
         attributes: { exclude: ['created_at', 'updated_at'] }
-      }
-    }
+      },
+    },
   });
+
   return city;
 };

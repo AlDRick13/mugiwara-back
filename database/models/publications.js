@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      publications.belongsTo(models.Profiles, { as: 'profile', foreignKey: 'profile_id' })
+      publications.belongsTo(models.city, { as: 'city', foreignKey: 'city_id' })
+      publications.belongsTo(models.Publications_types, { as: 'publications_type', foreignKey: 'publication_type_id' })
+
+      publications.hasMany(models.votes, { as: 'publications', foreignKey: 'publication_id' })
     }
   }
   publications.init({
@@ -23,13 +28,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUIDV4,
       allowNull: false,
 
-      //!foreigKey: true,
-      //!references: {
-      //!model: 'Tabla de profile',
-      //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
+      foreigKey: true,
+      references: {
+        model: 'Profiles',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     },
     title: {
       type: DataTypes.STRING,
@@ -48,13 +53,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
 
-      //!foreigKey: true,
-      //!references: {
-      //!model: 'Tabla de profile',
-      //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
+      foreigKey: true,
+      references: {
+        model: 'city',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     },
     img_url: {
       type: DataTypes.STRING
@@ -63,13 +68,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
 
-      //!foreigKey: true,
-      //!references: {
-      //!model: 'Tabla de profile',
-      //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
+      foreigKey: true,
+      references: {
+        model: 'Publications_types',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     },
   }, {
     sequelize,

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Roles.hasMany(models.Profiles, { as: 'roles', foreignKey: 'role_id' })
     }
   }
   Roles.init({
@@ -27,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Roles',  // Hacemos la diferencia del modelo
-    tableName: 'Roles',  // y la tabla en la DB para ser explicitos
+    tableName: 'roles',  // y la tabla en la DB para ser explicitos
     underscored: true,
     timestamps: true,
     // Los scopes son útiles para estandarizar dónde se regresa información  

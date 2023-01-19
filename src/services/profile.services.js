@@ -1,8 +1,9 @@
 const models = require('../../database/models');
 const { Op, INTEGER } = require('sequelize');
 const { CustomError } = require('../../utils/custom_error');
+const uuid = require('uuid')
 
-class StateService {
+class ProfilesService {
 
     constructor() {
 
@@ -26,16 +27,21 @@ class StateService {
 
         options.distinct = true;
 
-        const data = await models.state.findAndCountAll(options);
+        const data = await models.Profiles.findAndCountAll(options);
         return data;
     }
 
-    async createState({ name, id_country }) {
+    async createProfile({ user_id, role_id, image_url, code_phone, phone, country_id }) {
         const transaction = await models.sequelize.transaction();
         try {
-            let data = await models.state.create({
-                name,
-                id_country
+            let data = await models.Profiles.create({
+                id: uuid.v4(),
+                user_id,
+                role_id,
+                image_url,
+                code_phone,
+                phone,
+                country_id
             }, { transaction });
 
             await transaction.commit();
@@ -46,29 +52,34 @@ class StateService {
         }
     }
     //Return Instance if we do not converted to json (or raw:true)
-    async getStateOr404(id) {
-        let data = await models.state.findByPk(id);
+    async getProfileOr404(id) {
+        let data = await models.Profiles.findByPk(id);
 
-        if (!data) throw new CustomError('Not found state', 404, 'Not Found');
+        if (!data) throw new CustomError('Not found profile', 404, 'Not Found');
 
         return data;
     }
 
     //Return not an Instance raw:true | we also can converted to Json instead
-    async getState(id) {
-        let data = await models.state.findByPk(id, { raw: true });
+    async getProfile(id) {
+        let data = await models.Profiles.findByPk(id, { raw: true });
         return data;
     }
 
-    async updateState(id, { name }) {
+    async updateProfile(id, { user_id, role_id, image_url, code_phone, phone, country_id }) {
         const transaction = await models.sequelize.transaction();
         try {
-            let state = await models.state.findByPk(id);
+            let profile = await models.Profiles.findByPk(id);
 
-            if (!state) throw new CustomError('Not found state', 404, 'Not Found');
+            if (!profile) throw new CustomError('Not found profile', 404, 'Not Found');
 
-            let data = await state.update({
-                name
+            let data = await profile.update({
+                user_id,
+                role_id,
+                image_url,
+                code_phone,
+                phone,
+                country_id
             }, { transaction });
 
             await transaction.commit();
@@ -80,12 +91,12 @@ class StateService {
         }
     }
 
-    async removeState(id) {
+    async removeProfile(id) {
         const transaction = await models.sequelize.transaction();
         try {
-            let data = await models.state.findByPk(id);
+            let data = await models.Profiles.findByPk(id);
 
-            if (!data) throw new CustomError('Not found state', 404, 'Not Found');
+            if (!data) throw new CustomError('Not found profile', 404, 'Not Found');
 
             await data.destroy({ transaction });
 
@@ -100,4 +111,4 @@ class StateService {
 
 }
 
-module.exports = StateService;
+module.exports = ProfilesService;

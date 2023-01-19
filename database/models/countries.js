@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Countries.hasMany(models.Profiles, { as: 'countries', foreignKey: 'country_id' })
+      Countries.hasMany(models.state, { as: 'country', foreignKey: 'id_country' })
     }
   }
   Countries.init({
@@ -27,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Countries',  // Hacemos la diferencia del modelo
-    tableName: 'Countries',  // y la tabla en la DB para ser explicitos
+    tableName: 'countries',  // y la tabla en la DB para ser explicitos
     underscored: true,
     timestamps: true,
     // Los scopes son útiles para estandarizar dónde se regresa información  

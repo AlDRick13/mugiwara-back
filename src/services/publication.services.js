@@ -78,7 +78,7 @@ class PublicationServices {
             }, { transaction })
             await transaction.commit()
 
-            return updatedPublication[0]
+            return updatedPublication
         } catch (error) {
             await transaction.rollback()
             throw error
@@ -92,7 +92,7 @@ class PublicationServices {
             if (!publication) throw new CustomError('Not found publication', 404, 'Not Found')
             await publication.destroy({ transaction })
             await transaction.commit()
-            return publication[0]
+            return publication
 
         } catch (error) {
             await transaction.rollback()

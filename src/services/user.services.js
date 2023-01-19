@@ -77,7 +77,7 @@ class UserServices {
       }, { transaction })
       await transaction.commit()
 
-      return updatedUser[0]
+      return updatedUser
     } catch (error) {
       await transaction.rollback()
       throw error
@@ -91,7 +91,7 @@ class UserServices {
       if (!user) throw new CustomError('Not found user', 404, 'Not Found')
       await user.destroy({ transaction })
       await transaction.commit()
-      return user[0]
+      return user
 
     } catch (error) {
       await transaction.rollback()

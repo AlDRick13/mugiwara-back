@@ -29,7 +29,7 @@ class PublicationTypesServices {
         const data = await models.Publications_types.findAndCountAll(options)
         return data
     }
-    async createPublication({ name, description }) {
+    async createPublicationType({ name, description }) {
         const transaction = await models.sequelize.transaction()
         try {
             let newData = await models.Publications_types.create({
@@ -45,17 +45,17 @@ class PublicationTypesServices {
         }
     }
     //Return Instance if we do not converted to json (or raw:true)
-    async getPublicationOr404(id) {
+    async getPublicationTypeOr404(id) {
         let Data = await models.Publications_types.findByPk(id)
         if (!Data) throw new CustomError('Not found Type', 404, 'Not Found')
         return Data
     }
     //Return not an Instance raw:true | we also can converted to Json instead
-    async getPublication(id) {
+    async getPublicationType(id) {
         let data = await models.Publications_types.findByPk(id, { raw: true })
         return data
     }
-    async updatePublication(id, { name, description }) {
+    async updatePublicationType(id, { name, description }) {
         const transaction = await models.sequelize.transaction()
         try {
             let data = await models.Publications_types.findByPk(id)
@@ -73,7 +73,7 @@ class PublicationTypesServices {
             throw error
         }
     }
-    async removePublication(id) {
+    async removePublicationType(id) {
         const transaction = await models.sequelize.transaction()
         try {
             let data = await models.Publications_types.findByPk(id)

@@ -1,4 +1,4 @@
-const CityServices = require('../services/publication.services')
+const CityServices = require('../services/city.services')
 const { getPagination, getPagingData } = require('../../utils/pagination')
 
 const cityServices = new CityServices()
@@ -24,7 +24,7 @@ const getCities = async (request, response, next) => {
 const addCity = async (request, response, next) => {
     try {
         let { body } = request
-        let city = await cityServices.createPublication(body)
+        let city = await cityServices.createCity(body)
         return response.status(201).json({ results: city })
     } catch (error) {
         next(error)
@@ -34,7 +34,7 @@ const addCity = async (request, response, next) => {
 const getCity = async (request, response, next) => {
     try {
         let { id } = request.params
-        let cities = await cityServices.getPublicationOr404(id)
+        let cities = await cityServices.getCityOr404(id)
         return response.json({ results: cities })
     } catch (error) {
         next(error)
@@ -45,7 +45,7 @@ const updateCity = async (request, response, next) => {
     try {
         let { id } = request.params
         let { body } = request
-        let city = await cityServices.updatePublication(id, body)
+        let city = await cityServices.updateCity(id, body)
         return response.json({ results: city })
     } catch (error) {
         next(error)
@@ -55,7 +55,7 @@ const updateCity = async (request, response, next) => {
 const removeCity = async (request, response, next) => {
     try {
         let { id } = request.params
-        let city = await cityServices.removePublication(id)
+        let city = await cityServices.removeCity(id)
         return response.json({ results: city, message: 'removed' })
     } catch (error) {
         next(error)

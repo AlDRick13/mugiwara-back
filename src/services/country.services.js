@@ -1,5 +1,5 @@
 const models = require('../../database/models');
-const { Op, INTEGER } = require('sequelize');
+const { Op } = require('sequelize');
 const { CustomError } = require('../../utils/custom_error');
 
 class CountriesService {

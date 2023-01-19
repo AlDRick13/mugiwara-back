@@ -3,11 +3,14 @@ const { Op } = require('sequelize')
 const { CustomError } = require('../../utils/custom_error')
 const uuid = require('uuid')
 
+
+
 class CityServices {
 
     constructor() { }
 
     async findAndCount(query) {
+
         const options = {
             where: {},
         }
@@ -29,12 +32,12 @@ class CityServices {
         const city = await models.city.findAndCountAll(options)
         return city
     }
-    async createCity({ name, country_id }) {
+    async createCity({ name, state_id }) {
         const transaction = await models.sequelize.transaction()
         try {
             let newCity = await models.city.create({
                 name,
-                country_id
+                state_id
             }, { transaction })
 
             await transaction.commit()

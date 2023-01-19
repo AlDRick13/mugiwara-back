@@ -23,7 +23,7 @@ const getPublicationsTypes = async (request, response, next) => {
 const addPublicationTypes = async (request, response, next) => {
     try {
         let { body } = request
-        let data = await publicationTypesServices.createPublication(body)
+        let data = await publicationTypesServices.createPublicationType(body)
         return response.status(201).json({ results: data })
     } catch (error) {
         next(error)
@@ -33,7 +33,7 @@ const addPublicationTypes = async (request, response, next) => {
 const getPublicationTypes = async (request, response, next) => {
     try {
         let { id } = request.params
-        let data = await publicationTypesServices.getPublicationOr404(id)
+        let data = await publicationTypesServices.getPublicationTypeOr404(id)
         return response.json({ results: data })
     } catch (error) {
         next(error)
@@ -44,7 +44,7 @@ const updatePublicationTypes = async (request, response, next) => {
     try {
         let { id } = request.params
         let { body } = request
-        let data = await publicationTypesServices.updatePublication(id, body)
+        let data = await publicationTypesServices.updatePublicationType(id, body)
         return response.json({ results: data })
     } catch (error) {
         next(error)
@@ -54,7 +54,7 @@ const updatePublicationTypes = async (request, response, next) => {
 const removePublicationTypes = async (request, response, next) => {
     try {
         let { id } = request.params
-        let data = await publicationTypesServices.removePublication(id)
+        let data = await publicationTypesServices.removePublicationType(id)
         return response.json({ results: data, message: 'removed' })
     } catch (error) {
         next(error)

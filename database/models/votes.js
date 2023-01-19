@@ -16,9 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   votes.init({
     id: {
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.BIGINT
+      type: DataTypes.UUIDV4
     },
     publication_id: {
       type: DataTypes.UUIDV4,

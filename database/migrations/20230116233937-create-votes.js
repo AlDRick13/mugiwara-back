@@ -14,25 +14,25 @@ module.exports = {
           type: Sequelize.UUID,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de publication',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'publications',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         profile_id: {
           type: Sequelize.UUID,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'Profiles',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,

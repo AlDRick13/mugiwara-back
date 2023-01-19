@@ -14,13 +14,13 @@ module.exports = {
           type: Sequelize.UUID,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'Profiles',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         title: {
           type: Sequelize.STRING,
@@ -39,13 +39,13 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'city',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         img_url: {
           type: Sequelize.STRING
@@ -54,13 +54,13 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'Publications_types',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,

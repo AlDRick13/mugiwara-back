@@ -20,13 +20,13 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
 
-          //!foreigKey: true,
-          //!references: {
-          //!model: 'Tabla de profile',
-          //!key: 'id'
-          //!},
-          //!onUpdate: 'CASCADE', 
-          //!onDelete: 'SET NULL'
+          foreigKey: true,
+          references: {
+            model: 'Countries',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,

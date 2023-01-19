@@ -15,11 +15,27 @@ module.exports = {
         user_id: {
           unique: true,
           allowNull: false,
-          type: Sequelize.UUID
+          type: Sequelize.UUID,
+
+          foreignKey: true,
+          references: {
+            model: 'Users',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
+          onDelete: 'SET NULL'
         },
         role_id: {
           allowNull: false,
-          type: Sequelize.BIGINT
+          type: Sequelize.BIGINT,
+
+          foreignKey: true,
+          references: {
+            model: 'Roles',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
+          onDelete: 'SET NULL'
         },
         image_url: {
           type: Sequelize.TEXT
@@ -32,7 +48,15 @@ module.exports = {
         },
         country_id: {
           allowNull: false,
-          type: Sequelize.BIGINT
+          type: Sequelize.BIGINT,
+
+          foreignKey: true,
+          references: {
+            model: 'Countries',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
+          onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,

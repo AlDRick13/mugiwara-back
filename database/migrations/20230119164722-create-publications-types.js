@@ -18,7 +18,6 @@ module.exports = {
           type: Sequelize.TEXT
         },
         description: {
-          unique: true,
           type: Sequelize.TEXT
         },
         createdAt: {

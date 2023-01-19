@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      city.hasMany(models.publications, { as: 'city', foreignKey: 'city_id' })
+      city.belongsTo(models.state, { as: 'state', foreignKey: 'state_id' })
     }
   }
   city.init({
@@ -25,9 +27,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT
     },
-    state_id: { //! Foraneo --> read migrations
+    state_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+
+      foreigKey: true,
+      references: {
+        model: 'state',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+
     },
   }, {
     sequelize,

@@ -4,65 +4,68 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('profiles', {
-
+      await queryInterface.createTable('publications', {
         id: {
           allowNull: false,
-          defaultValue: Sequelize.UUID,
           primaryKey: true,
           type: Sequelize.UUID
         },
-        user_id: {
-          unique: true,
-          allowNull: false,
+        profile_id: {
           type: Sequelize.UUID,
-
-          foreignKey: true,
-          references: {
-            model: 'Users',
-            key: 'id'
-          },
-          onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
-          onDelete: 'SET NULL'
-        },
-        role_id: {
           allowNull: false,
-          type: Sequelize.BIGINT,
 
-          foreignKey: true,
+          foreigKey: true,
           references: {
-            model: 'Roles',
+            model: 'profiles',
             key: 'id'
           },
-          onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
+          onUpdate: 'CASCADE',
           onDelete: 'SET NULL'
         },
-        image_url: {
+        title: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        description: {
+          type: Sequelize.STRING
+        },
+        content: {
           type: Sequelize.TEXT
         },
-        code_phone: {
-          type: Sequelize.BIGINT
+        picture: {
+          type: Sequelize.STRING
         },
-        phone: {
-          type: Sequelize.BIGINT
-        },
-        country_id: {
+        city_id: {
+          type: Sequelize.INTEGER,
           allowNull: false,
-          type: Sequelize.BIGINT,
 
-          foreignKey: true,
+          foreigKey: true,
           references: {
-            model: 'Countries',
+            model: 'cities',
             key: 'id'
           },
-          onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
+        },
+        img_url: {
+          type: Sequelize.STRING
+        },
+        publication_type_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+
+          foreigKey: true,
+          references: {
+            model: 'publication_types',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
           onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          field: 'created_at' // --> Asegurense de establecer el campo en snake_case aquí
-          // o usando created_at en vez de createdAt en el Key
+          field: 'created_at'
         },
         updatedAt: {
           allowNull: false,
@@ -80,14 +83,11 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('profiles', { transaction });
+      await queryInterface.dropTable('publications', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
       throw error;
     }
   }
-}
-
-
-
+};

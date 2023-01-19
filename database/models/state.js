@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      state.hasMany(models.city, { as: 'cities', foreignKey: 'state_id' })
+      state.belongsTo(models.Countries, { as: 'country', foreignKey: 'id_country' })
     }
   }
   state.init({
@@ -29,13 +31,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
 
-      //!foreigKey: true,
-      //!references: {
-      //!model: 'Tabla de profile',
-      //!key: 'id'
-      //!},
-      //!onUpdate: 'CASCADE', 
-      //!onDelete: 'SET NULL'
+      foreigKey: true,
+      references: {
+        model: 'Countries',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     },
   }, {
     sequelize,

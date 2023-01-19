@@ -14,6 +14,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Profiles.hasMany(models.publications, { as: 'profile', foreignKey: 'profile_id' })
+      Profiles.hasMany(models.votes, { as: 'profilesVotes', foreignKey: 'profile_id' })
+
+      Profiles.belongsTo(models.Users, { as: 'user', foreignKey: 'user_id' })
+      Profiles.belongsTo(models.Roles, { as: 'role', foreignKey: 'role_id' })
+      Profiles.belongsTo(models.Countries, { as: 'country', foreignKey: 'country_id' })
+
     }
   }
   Profiles.init({
@@ -26,24 +34,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       unique: true,
       allowNull: false,
+
       foreignKey: true,
       references: {
         model: 'Users',
         key: 'id'
       },
       onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
-      // onDelete: 'RESTRICT' // Elijan como quieren que se comporte la DB
+      onDelete: 'SET NULL' // Elijan como quieren que se comporte la DB
     },
     role_id: {
       type: DataTypes.BIGINT,
       allowNull: false,
+
       foreignKey: true,
       references: {
         model: 'Roles',
         key: 'id'
       },
       onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
-      // onDelete: 'RESTRICT' // Elijan como quieren que se comporte la DB
+      onDelete: 'SET NULL' // Elijan como quieren que se comporte la DB
     },
     image_url: {
       type: DataTypes.TEXT
@@ -57,13 +67,14 @@ module.exports = (sequelize, DataTypes) => {
     country_id: {
       allowNull: false,
       type: DataTypes.BIGINT,
+
       foreignKey: true,
       references: {
         model: 'Countries',
         key: 'id'
       },
       onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
-      // onDelete: 'RESTRICT' // Elijan como quieren que se comporte la DB
+      onDelete: 'SET NULL' // Elijan como quieren que se comporte la DB
     },
   }, {
     sequelize,

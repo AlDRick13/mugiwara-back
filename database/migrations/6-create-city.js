@@ -19,9 +19,17 @@ module.exports = {
           allowNull: false,
           type: Sequelize.TEXT
         },
-        state_id: { //! Foraneo - En cuanto funcione lo agregamos
+        state_id: {
           type: Sequelize.INTEGER,
-          allowNull: false
+          allowNull: false,
+
+          foreigKey: true,
+          references: {
+            model: 'states',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         createdAt: {
           allowNull: false,

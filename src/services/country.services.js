@@ -30,8 +30,7 @@ class CountriesService {
         return data;
     }
 
-    async createCountry(name) {
-        console.log(name);
+    async createCountry({ name }) {
         const transaction = await models.sequelize.transaction();
         try {
             let data = await models.Countries.create({

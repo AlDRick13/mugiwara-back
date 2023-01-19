@@ -30,12 +30,12 @@ class StateService {
         return data;
     }
 
-    async createState(name) {
-        console.log(name);
+    async createState({ name, id_country }) {
         const transaction = await models.sequelize.transaction();
         try {
             let data = await models.state.create({
                 name,
+                id_country
             }, { transaction });
 
             await transaction.commit();

@@ -1,6 +1,7 @@
 const models = require('../../database/models');
 const { Op, INTEGER } = require('sequelize');
 const { CustomError } = require('../../utils/custom_error');
+const uuid = require('uuid')
 
 class ProfilesService {
 
@@ -30,12 +31,17 @@ class ProfilesService {
         return data;
     }
 
-    async createProfile(name) {
-        console.log(name);
+    async createProfile({ user_id, role_id, image_url, code_phone, phone, country_id }) {
         const transaction = await models.sequelize.transaction();
         try {
             let data = await models.Profiles.create({
-                name,
+                id: uuid.v4(),
+                user_id,
+                role_id,
+                image_url,
+                code_phone,
+                phone,
+                country_id
             }, { transaction });
 
             await transaction.commit();
@@ -60,7 +66,7 @@ class ProfilesService {
         return data;
     }
 
-    async updateProfile(id, { name }) {
+    async updateProfile(id, { user_id, role_id, image_url, code_phone, phone, country_id }) {
         const transaction = await models.sequelize.transaction();
         try {
             let profile = await models.Profiles.findByPk(id);
@@ -68,7 +74,12 @@ class ProfilesService {
             if (!profile) throw new CustomError('Not found profile', 404, 'Not Found');
 
             let data = await profile.update({
-                name
+                user_id,
+                role_id,
+                image_url,
+                code_phone,
+                phone,
+                country_id
             }, { transaction });
 
             await transaction.commit();

@@ -23,8 +23,8 @@ const getPublicationTypes = async (request, response, next) => {
 
 const addPublicationType = async (request, response, next) => {
     try {
-        const { name } = request.body;
-        let publicationType = await publicationsTypesService.createPublicationType(name);
+        const body = request.body;
+        let publicationType = await publicationsTypesService.createPublicationType(body);
         return response.status(201).json({ results: publicationType });
     } catch (error) {
         next(error);

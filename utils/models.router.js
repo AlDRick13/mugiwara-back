@@ -8,6 +8,8 @@ const routesRoles = require('../src/routes/role.routes');
 const routesCountries = require('../src/routes/country.routes');
 const routesProfiles = require('../src/routes/profile.routes');
 const routesStates = require('../src/routes/state.routes');
+//const routesAuth = require('../src/auth/auth.routes')
+const routesAuth = require('../src/auth/auth.routes')
 
 function routerModels(app) {
   const router = express.Router();
@@ -24,6 +26,7 @@ function routerModels(app) {
   router.use('/profiles', routesProfiles);
   router.use('/states', routesStates);
 
+  router.use('/login', routesAuth)
   // other models here
 }
 

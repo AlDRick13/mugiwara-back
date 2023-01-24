@@ -31,6 +31,23 @@ class UserServices {
     return users
   }
 
+  async findUserByEmail(email) {
+
+    const data = await models.Users.findOne({
+      where: {
+        email: email
+      },
+      include: [
+        {
+          model: models.Profiles,
+          as: 'profile'
+        }
+      ]
+    })
+
+    return data
+  }
+
   async createUser({ first_name, last_name, email, username, password, email_verified, token, role_id, image_url, code_phone, phone, country_id }) {
     const transaction = await models.sequelize.transaction()
     try {
@@ -66,7 +83,11 @@ class UserServices {
   }
   //Return Instance if we do not converted to json (or raw:true)
   async getUserOr404(id) {
-    let user = await models.Users.findByPk(id)
+    let user = await models.Users.findByPk(id, {
+      include: [
+        { model: models.Profiles, as: 'profile' }
+      ]
+    })
     if (!user) throw new CustomError('Not found User', 404, 'Not Found')
     return user
   }

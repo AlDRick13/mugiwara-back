@@ -2,6 +2,7 @@ const models = require('../../database/models')
 const { Op } = require('sequelize')
 const { CustomError } = require('../../utils/custom_error')
 const uuid = require('uuid')
+const { hashPassword } = require('../../utils/crypto')
 
 class UserServices {
 
@@ -30,7 +31,24 @@ class UserServices {
     return users
   }
 
-  async createUser({ first_name, last_name, email, username, password, email_verified, token }) {
+  async findUserByEmail(email) {
+
+    const data = await models.Users.findOne({
+      where: {
+        email: email
+      },
+      include: [
+        {
+          model: models.Profiles,
+          as: 'profile'
+        }
+      ]
+    })
+
+    return data
+  }
+
+  async createUser({ first_name, last_name, email, username, password, email_verified, token, role_id, image_url, code_phone, phone, country_id }) {
     const transaction = await models.sequelize.transaction()
     try {
       let newUser = await models.Users.create({
@@ -39,21 +57,37 @@ class UserServices {
         last_name,
         email,
         username,
-        password,
+        password: hashPassword(password),
         email_verified,
         token
       }, { transaction })
 
+      let newProfile = await models.Profiles.create({
+        id: uuid.v4(),
+        user_id: newUser.id,
+        role_id,
+        image_url,
+        code_phone,
+        phone,
+        country_id
+      }, { transaction })
+
       await transaction.commit()
-      return newUser
+      return [{ user: newUser, profile: newProfile }]
     } catch (error) {
       await transaction.rollback()
       throw error
     }
+
+
   }
   //Return Instance if we do not converted to json (or raw:true)
   async getUserOr404(id) {
-    let user = await models.Users.findByPk(id)
+    let user = await models.Users.findByPk(id, {
+      include: [
+        { model: models.Profiles, as: 'profile' }
+      ]
+    })
     if (!user) throw new CustomError('Not found User', 404, 'Not Found')
     return user
   }
@@ -73,7 +107,7 @@ class UserServices {
         last_name,
         email,
         username,
-        password
+        password: hashPassword(password),
       }, { transaction })
       await transaction.commit()
 

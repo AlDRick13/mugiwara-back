@@ -39,8 +39,10 @@ class UserServices {
       },
       include: [
         {
-          model: models.Profiles,
-          as: 'profile'
+          model: models.Profiles, as: 'profile',
+          include: [{
+            model: models.Roles, as: 'role'
+          }]
         }
       ]
     })
@@ -85,7 +87,12 @@ class UserServices {
   async getUserOr404(id) {
     let user = await models.Users.findByPk(id, {
       include: [
-        { model: models.Profiles, as: 'profile' }
+        {
+          model: models.Profiles, as: 'profile',
+          include: [{
+            model: models.Roles, as: 'role'
+          }]
+        }
       ]
     })
     if (!user) throw new CustomError('Not found User', 404, 'Not Found')

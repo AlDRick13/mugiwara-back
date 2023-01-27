@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
 const routerModels = require('./utils/models.router');
+const swaggerDocs = require('./swagger');
 
 const app = express();
 app.use(express.json());
@@ -59,4 +60,5 @@ routerModels(app);
 
 app.listen(PORT, () => {
   console.log(`Server on PORT: ${PORT}`);
+  swaggerDocs(app, PORT);
 });

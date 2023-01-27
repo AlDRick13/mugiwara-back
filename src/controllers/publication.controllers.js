@@ -24,7 +24,6 @@ const getPublications = async (request, response, next) => {
 const addPublication = async (request, response, next) => {
     try {
         const profile_id = request.user.profile_id;
-
         let { body } = request;
         let data = await publicationServices.createPublication(body, profile_id);
         return response.status(201).json({ results: data });

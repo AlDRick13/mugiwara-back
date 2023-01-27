@@ -33,8 +33,6 @@ const getUserByTokenId = async (request, response, next) => {
 };
 
 
-
-
 const addUser = async (request, response, next) => {
   try {
     let { body } = request;

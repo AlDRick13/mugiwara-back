@@ -10,9 +10,13 @@ const {
   updateUser,
   removeUser } = require('../controllers/user.controllers');
 
+const {
+  getVotesByUser
+} = require('../controllers/vote.controllers')
+
 router.get('/', passportJWT.authenticate('jwt', { session: false }), getUsers);
-// router.post('/', addUser) auth/login
 router.get('/:id', passportJWT.authenticate('jwt', { session: false }), getUser);
+router.get('/:id/votes', passportJWT.authenticate('jwt', { session: false }), getVotesByUser)
 router.put('/:id', passportJWT.authenticate('jwt', { session: false }), userMiddleware, updateUser);
 router.delete('/:id', removeUser);
 

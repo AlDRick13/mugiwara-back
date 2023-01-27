@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      // onDelete: 'CASCADE'
     },
     title: {
       type: DataTypes.STRING,
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      // onDelete: 'CASCADE'
     },
     img_url: {
       type: DataTypes.STRING
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      // onDelete: 'CASCADE'
     },
   }, {
     sequelize,

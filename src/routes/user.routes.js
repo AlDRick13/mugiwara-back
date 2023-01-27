@@ -9,6 +9,13 @@ const {
   getUser,
   updateUser,
   removeUser } = require('../controllers/user.controllers');
+const {
+  getVotesByUser
+} = require('../controllers/vote.controllers');
+
+const {
+  getPublicationsByUser
+} = require('../controllers/publication.controllers');
 
 /**
  * @openapi

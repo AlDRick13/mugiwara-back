@@ -15,6 +15,7 @@ const options = {
     "./src/routes/user.routes.js",
     "./src/routes/publication.routes.js",
     "./database/models/users.js",
+
   ],
 };
 

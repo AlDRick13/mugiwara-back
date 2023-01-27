@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      votes.belongsTo(models.publications, { as: 'publications', foreignKey: 'publication_id' })
-      votes.belongsTo(models.Profiles, { as: 'Profiles', foreignKey: 'profile_id' })
+      votes.belongsTo(models.publications, { as: 'publications', foreignKey: 'publication_id' });
+      votes.belongsTo(models.Profiles, { as: 'Profiles', foreignKey: 'profile_id' });
     }
   }
   votes.init({
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
+      onDelete: 'CASCADE'
     },
     profile_id: {
       type: DataTypes.UUIDV4,
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
+      onDelete: 'CASCADE'
     },
   }, {
     sequelize,

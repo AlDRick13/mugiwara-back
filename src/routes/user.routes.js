@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passportJWT = require('../../middlewares/auth.middleware');
-
+const userMiddleware = require('../../middlewares/updateUser.middleware');
 
 const {
   getUsers,
@@ -41,10 +41,14 @@ const {
  */
 
 
+
 router.get('/', passportJWT.authenticate('jwt', { session: false }), getUsers);
-// router.post('/', addUser) auth/login
 router.get('/:id', passportJWT.authenticate('jwt', { session: false }), getUser);
-router.put('/:id', passportJWT.authenticate('jwt', { session: false }), updateUser);
+router.get('/:id/votes', passportJWT.authenticate('jwt', { session: false }), getVotesByUser);
+router.get('/:id/publications', passportJWT.authenticate('jwt', { session: false }), getPublicationsByUser);
+
+router.put('/:id', passportJWT.authenticate('jwt', { session: false }), userMiddleware, updateUser);
 router.delete('/:id', removeUser);
+
 
 module.exports = router;

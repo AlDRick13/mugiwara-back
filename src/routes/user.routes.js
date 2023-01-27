@@ -1,17 +1,19 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const passportJWT = require('../../middlewares/auth.middleware');
+
 
 const {
   getUsers,
   addUser,
   getUser,
   updateUser,
-  removeUser } = require('../controllers/user.controllers')
+  removeUser } = require('../controllers/user.controllers');
 
-router.get('/', getUsers)
-router.post('/', addUser)
-router.get('/:id', getUser)
-router.put('/:id', updateUser)
-router.delete('/:id', removeUser)
+router.get('/', passportJWT.authenticate('jwt', { session: false }), getUsers);
+// router.post('/', addUser) auth/login
+router.get('/:id', passportJWT.authenticate('jwt', { session: false }), getUser);
+router.put('/:id', passportJWT.authenticate('jwt', { session: false }), updateUser);
+router.delete('/:id', removeUser);
 
-module.exports = router
+module.exports = router;

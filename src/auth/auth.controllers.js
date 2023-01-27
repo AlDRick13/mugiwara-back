@@ -24,6 +24,7 @@ const postLogin = (request, response, next) => {
                 if (data) {
                     const token = jwt.sign({
                         id: data.id,
+                        profile_id: data.profile[0].id,
                         email: data.email,
                         role: data.profile[0].role.name
                     }, 'ac4d3ml0');

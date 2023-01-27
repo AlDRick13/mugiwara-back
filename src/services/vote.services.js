@@ -33,14 +33,36 @@ class VotesServices {
     async createVote({ publication_id, profile_id }) {
         const transaction = await models.sequelize.transaction();
         try {
-            let newVote = await models.votes.create({
-                id: uuid.v4(),
-                publication_id,
-                profile_id
-            }, { transaction });
+            const validate = await models.votes.findOne({
+                where: {
+                    publication_id,
+                    profile_id
+                }
+            });
+            if (validate) {
+                const value = await models.votes.destroy({
+                    where: {
+                        publication_id: validate.publication_id,
+                        profile_id: validate.profile_id
 
-            await transaction.commit();
-            return newVote;
+                    }
+                }, { transaction });
+                await transaction.commit();
+
+                return value[0];
+            } else {
+                let newVote = await models.votes.create({
+                    id: uuid.v4(),
+                    publication_id,
+                    profile_id
+                }, { transaction });
+                await transaction.commit();
+
+                return newVote;
+            }
+
+
+
         } catch (error) {
             await transaction.rollback();
             throw error;

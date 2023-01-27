@@ -4,11 +4,11 @@
 
 'use strict';
 const { Op } = require("sequelize");
-const {v4: uuid4} = require('uuid');
+const { v4: uuid4 } = require('uuid');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.bulkInsert('cities', [
@@ -18,7 +18,7 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         }
-    ], { transaction })
+      ], { transaction })
 
       await transaction.commit();
     } catch (error) {
@@ -27,10 +27,10 @@ module.exports = {
     }
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.bulkDelete('cities', null, { 
+      await queryInterface.bulkDelete('cities', null, {
       }, { transaction });
       await transaction.commit();
     } catch (error) {

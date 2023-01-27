@@ -23,9 +23,9 @@ const getVotes = async (request, response, next) => {
 
 const addVote = async (request, response, next) => {
     try {
-        const profile_id = req.user.profile_id;
-        const publication_id = req.params.id;
-        let vote = await voteServices.createVote(body);
+        const profile_id = request.user.profile_id;
+        const publication_id = request.params.id;
+        let vote = await voteServices.createVote({ profile_id, publication_id });
         return response.status(201).json({ results: vote });
     } catch (error) {
         next(error);

@@ -42,22 +42,26 @@ class VotesServices {
             if (validate) {
                 const value = await models.votes.destroy({
                     where: {
-                        id: validate.id
+                        publication_id: validate.publication_id,
+                        profile_id: validate.profile_id
+
                     }
-                });
+                }, { transaction });
                 await transaction.commit();
 
-                return value;
+                return value[0];
+            } else {
+                let newVote = await models.votes.create({
+                    id: uuid.v4(),
+                    publication_id,
+                    profile_id
+                }, { transaction });
+                await transaction.commit();
+
+                return newVote;
             }
-            let newVote = await models.votes.create({
-                id: uuid.v4(),
-                publication_id,
-                profile_id
-            }, { transaction });
 
 
-            await transaction.commit();
-            return newVote;
 
         } catch (error) {
             await transaction.rollback();

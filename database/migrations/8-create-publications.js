@@ -45,7 +45,7 @@ module.exports = {
             key: 'id'
           },
           onUpdate: 'CASCADE',
-          onDelete: 'SET NULL'
+          onDelete: 'CASCADE'
         },
         img_url: {
           type: Sequelize.STRING
@@ -60,7 +60,7 @@ module.exports = {
             key: 'id'
           },
           onUpdate: 'CASCADE',
-          onDelete: 'SET NULL'
+          onDelete: 'CASCADE'
         },
         createdAt: {
           allowNull: false,

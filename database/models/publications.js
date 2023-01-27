@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      publications.belongsTo(models.Profiles, { as: 'profile', foreignKey: 'profile_id' })
-      publications.belongsTo(models.city, { as: 'city', foreignKey: 'city_id' })
-      publications.belongsTo(models.Publications_types, { as: 'publications_type', foreignKey: 'publication_type_id' })
+      publications.belongsTo(models.Profiles, { as: 'profile', foreignKey: 'profile_id' });
+      publications.belongsTo(models.city, { as: 'city', foreignKey: 'city_id' });
+      publications.belongsTo(models.Publications_types, { as: 'publications_type', foreignKey: 'publication_type_id' });
 
-      publications.hasMany(models.votes, { as: 'publications', foreignKey: 'publication_id' })
+      publications.hasMany(models.votes, { as: 'publications', foreignKey: 'publication_id' });
     }
   }
   publications.init({
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
+      onDelete: 'CASCADE'
     },
     title: {
       type: DataTypes.STRING,
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
+      onDelete: 'CASCADE'
     },
     img_url: {
       type: DataTypes.STRING
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
+      onDelete: 'CASCADE'
     },
   }, {
     sequelize,

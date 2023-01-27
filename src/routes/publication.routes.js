@@ -17,7 +17,7 @@ const {
 
 router.get('/', passportJWT.authenticate('jwt', { session: false }), getPublications);
 router.post('/', passportJWT.authenticate('jwt', { session: false }), addPublication);
-router.post('/vote', addVote)
+router.post('/:id/vote', addVote) //! le falta Autenticacion - middleware.
 router.get('/:id', passportJWT.authenticate('jwt', { session: false }), getPublication);
 // router.put('/:id', updatePublication)
 router.delete('/:id', removePublication);

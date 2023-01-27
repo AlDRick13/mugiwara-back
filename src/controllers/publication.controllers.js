@@ -24,10 +24,19 @@ const getPublications = async (request, response, next) => {
 const addPublication = async (request, response, next) => {
     try {
         const profile_id = request.user.profile_id;
-
         let { body } = request;
         let data = await publicationServices.createPublication(body, profile_id);
         return response.status(201).json({ results: data });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getPublicationsByUser = async (request, response, next) => {
+    try {
+        const id = request.params.id;
+        let publications = await publicationServices.findAndCountPublicationsByUser(id);
+        return response.status(201).json({ results: publications });
     } catch (error) {
         next(error);
     }
@@ -69,6 +78,7 @@ module.exports = {
     addPublication,
     getPublication,
     updatePublication,
+    getPublicationsByUser,
     removePublication
 }
 

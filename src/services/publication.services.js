@@ -30,6 +30,34 @@ class PublicationServices {
         return data;
     }
 
+    async findAndCountPublicationsByUser(id) {
+        let user = await models.Users.findByPk(id, {
+            include: [
+                {
+                    model: models.Profiles, as: 'profile',
+                    include: [{
+                        model: models.Roles,
+                        as: 'role'
+                    }]
+                },
+            ]
+        });
+        if (!user) throw new CustomError('Not found User', 404, 'Not Found');
+
+        let profile = user.profile[0].id;
+        if (!profile) throw new CustomError('Not found profile', 404, 'Not Found');
+
+        if (profile) {
+
+            let publication = await models.publications.findAll({
+                where: {
+                    profile_id: profile
+                }
+            });
+
+            return publication;
+        }
+    }
     async createPublication({ title, description, content, picture, city_id, img_url, publication_type_id }, profile_id) {
         const transaction = await models.sequelize.transaction();
         try {

@@ -1,5 +1,6 @@
 const VoteServices = require('../services/vote.services');
 const { getPagination, getPagingData } = require('../../utils/pagination');
+const { request, response } = require('express');
 
 const voteServices = new VoteServices();
 
@@ -20,6 +21,17 @@ const getVotes = async (request, response, next) => {
         next(error);
     }
 };
+
+const getVotesByUser = async (request, response, next) => {
+    try {
+        const id = request.params.id
+        let votes = await voteServices.findAndCountVotesByUser(id);
+        return response.status(201).json({ results: votes });
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 const addVote = async (request, response, next) => {
     try {
@@ -68,5 +80,6 @@ module.exports = {
     addVote,
     getVote,
     updateVote,
+    getVotesByUser,
     removeVote
 };

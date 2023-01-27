@@ -97,8 +97,6 @@ class UserServices {
             as: 'role'
           }]
         },
-
-
       ]
     });
     if (!user) throw new CustomError('Not found User', 404, 'Not Found');

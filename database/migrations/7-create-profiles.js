@@ -23,7 +23,7 @@ module.exports = {
             key: 'id'
           },
           onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
-          onDelete: 'SET NULL'
+          onDelete: 'CASCADE'
         },
         role_id: {
           allowNull: false,
@@ -35,7 +35,7 @@ module.exports = {
             key: 'id'
           },
           onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
-          onDelete: 'SET NULL'
+          onDelete: 'CASCADE'
         },
         image_url: {
           type: Sequelize.TEXT
@@ -56,7 +56,7 @@ module.exports = {
             key: 'id'
           },
           onUpdate: 'CASCADE', // Casi siempre elegimos CASCADE
-          onDelete: 'SET NULL'
+          onDelete: 'CASCADE'
         },
         createdAt: {
           allowNull: false,

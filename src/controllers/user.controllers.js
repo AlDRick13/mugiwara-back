@@ -26,7 +26,13 @@ const getUserByTokenId = async (request, response, next) => {
     console.log(request.user);
     const tokenId = request.user.id;
     let users = await userServices.getUserOr404(tokenId);
-    return response.json({ results: users });
+    return response.json({
+      "users_id": users.id,
+      "first_name": users.first_name,
+      "last_name": users.last_name,
+      "email": users.email,
+      "profile": users.profile[0]
+    });
   } catch (error) {
     next(error);
   }

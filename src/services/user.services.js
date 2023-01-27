@@ -40,7 +40,11 @@ class UserServices {
       include: [
         {
           model: models.Profiles,
-          as: 'profile'
+          as: 'profile',
+          include: [{
+            model: models.roles,
+            as: 'role'
+          }]
         }
       ]
     })

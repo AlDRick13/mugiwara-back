@@ -44,6 +44,7 @@ class UserServices {
           include: [{
             model: models.Roles,
             as: 'role'
+
           }]
         }
       ]
@@ -96,6 +97,7 @@ class UserServices {
             as: 'role'
           }]
         },
+
 
       ]
     })

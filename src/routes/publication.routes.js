@@ -1,5 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+
+const passportJWT = require('../../middlewares/auth.middleware');
+
 
 const {
     getPublications,
@@ -7,12 +10,12 @@ const {
     getPublication,
     updatePublication,
     removePublication
-} = require('../controllers/publication.controllers')
+} = require('../controllers/publication.controllers');
 
-router.get('/', getPublications)
-router.post('/', addPublication)
-router.get('/:id', getPublication)
-router.put('/:id', updatePublication)
-router.delete('/:id', removePublication)
+router.get('/', passportJWT.authenticate('jwt', { session: false }), getPublications);
+router.post('/', passportJWT.authenticate('jwt', { session: false }), addPublication);
+router.get('/:id', passportJWT.authenticate('jwt', { session: false }), getPublication);
+// router.put('/:id', updatePublication)
+router.delete('/:id', removePublication);
 
-module.exports = router
+module.exports = router;

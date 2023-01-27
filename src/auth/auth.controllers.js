@@ -49,6 +49,16 @@ const postLogin = (request, response, next) => {
     }
 };
 
+// const getUserInfo = async (request, response, next) => {
+//     try {
+//         let {id} = request.body;
+//         let  user = await userServices.getUser()
+
+//     } catch (error) {
+
+//     }
+// }
+
 module.exports = {
     postLogin,
     postSignup

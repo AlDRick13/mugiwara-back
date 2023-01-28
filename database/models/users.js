@@ -1,3 +1,50 @@
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     users:
+ *       type: object
+ *       properties:
+ *         first_name:
+ *           type: string
+ *           example: Tony
+ *         last_name:
+ *           type: string
+ *           example: Ospino
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com
+ *     register:
+ *       type: object
+ *       properties:
+ *         first_name:
+ *           type: string
+ *           example: Tony
+ *         last_name:
+ *           type: string
+ *           example: Ospino
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com
+ *         username:
+ *           type: string
+ *           example: Tonyop46
+ *         password:
+ *           type: string
+ *           example: 1234
+ *         email_verified:
+ *           type: Date
+ *           example: correct credentials
+ *         token:
+ *           type: string
+ *           example: 12dfdf2232dfdf
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
 'use strict'
 const {
   Model

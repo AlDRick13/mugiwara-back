@@ -9,7 +9,7 @@ const {
     removeVote } = require('../controllers/vote.controllers')
 
 router.get('/', getVotes)
-router.post('/', addVote)
+//router.post('/', addVote)
 router.get('/:id', getVote)
 router.put('/:id', updateVote)
 router.delete('/:id', removeVote)

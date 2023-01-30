@@ -34,10 +34,42 @@
  *           example: 1234
  *         email_verified:
  *           type: Date
- *           example: correct credentials
+ *           example: 2023/01/30
  *         token:
  *           type: string
  *           example: 12dfdf2232dfdf
+ *         role_id:
+ *           type: int
+ *           example: 1
+ *         image_url:
+ *           type: string
+ *           example: "Hola chula"
+ *         code_phone:
+ *           type: string
+ *           example: "111121111"
+ *         phone:
+ *           type: string
+ *           example: "88889288823382"
+ *         country_id:
+ *           type: int
+ *           example: 1
+ *     user:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com
+ *         password:
+ *           type: string
+ *           example: 1234 
+ *     login:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com      
+ *          
+ *    
  *   securitySchemes:
  *     bearerAuth:
  *       type: http

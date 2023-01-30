@@ -30,17 +30,66 @@ class VotesServices {
         return votes;
     }
 
+    async findAndCountVotesByUser(id) {
+        let user = await models.Users.findByPk(id, {
+            include: [
+                {
+                    model: models.Profiles, as: 'profile',
+                    include: [{
+                        model: models.Roles,
+                        as: 'role'
+                    }]
+                },
+            ]
+        });
+        if (!user) throw new CustomError('Not found User', 404, 'Not Found');
+
+        let profile = user.profile[0].id
+        if (!profile) throw new CustomError('Not found profile', 404, 'Not Found');
+
+        if (profile) {
+
+            let votes = await models.votes.findAll({
+                where: {
+                    profile_id: profile
+                }
+            })
+
+            return votes
+        }
+    }
+
     async createVote({ publication_id, profile_id }) {
         const transaction = await models.sequelize.transaction();
         try {
-            let newVote = await models.votes.create({
-                id: uuid.v4(),
-                publication_id,
-                profile_id
-            }, { transaction });
+            const validate = await models.votes.findOne({
+                where: {
+                    publication_id,
+                    profile_id
+                }
+            });
+            if (validate) {
+                const value = await models.votes.destroy({
+                    where: {
+                        publication_id: validate.publication_id,
+                        profile_id: validate.profile_id
 
-            await transaction.commit();
-            return newVote;
+                    }
+                }, { transaction });
+                await transaction.commit();
+
+                return value[0];
+            } else {
+                let newVote = await models.votes.create({
+                    id: uuid.v4(),
+                    publication_id,
+                    profile_id
+                }, { transaction });
+                await transaction.commit();
+
+                return newVote;
+            }
+
         } catch (error) {
             await transaction.rollback();
             throw error;

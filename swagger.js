@@ -12,8 +12,8 @@ const options = {
     },
   },
   apis: [
-    "./src/routes/user.routes.js",
-    "./src/routes/publication.routes.js",
+    "./src/auth/auth.routes.js",
+    "./src/routes/publications_types.routes.js",
     "./database/models/users.js",
   ],
 };

@@ -68,8 +68,6 @@
  *         email:
  *           type: string
  *           example: tony@gmail.com      
- *          
- *    
  *   securitySchemes:
  *     bearerAuth:
  *       type: http

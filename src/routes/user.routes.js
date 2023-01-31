@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passportJWT = require('../../middlewares/auth.middleware');
 const userMiddleware = require('../../middlewares/updateUser.middleware');
+const { getPublicationsByUser } = require('../controllers/publication.controllers');
 
 const {
   getUsers,
@@ -16,6 +17,7 @@ const {
 const {
   getPublicationsByUser
 } = require('../controllers/publication.controllers');
+
 
 
 

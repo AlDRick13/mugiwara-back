@@ -4,7 +4,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
 
 /**
  * @openapi
- * /api/v1/publication_types/{id}:
+ * /api/v1/publications-types/{id}:
  *   get:
  *     summary: Get all publication_type from user
  *     tags: [Publication_type]
@@ -30,6 +30,8 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *                 data:
  *                   type: array
  *                   item: {}
+ *     security:
+*        - jwtAuth: []   
  * 
  */
 

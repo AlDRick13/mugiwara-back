@@ -67,14 +67,16 @@
  *       properties:
  *         email:
  *           type: string
- *           example: tony@gmail.com      
- *          
- *    
+ *           example: tony@gmail.com     
+ * 
  *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *     ApiKeyAuth: 
+ *       type: apiKey
+ *       in: header
+ *       name: X-API-Key    
+ *  
+ *    
+ *   
  */
 
 'use strict'

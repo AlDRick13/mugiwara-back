@@ -63,7 +63,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications/{id}:
  *   get:
- *     summary: Get all publications_types from user
+ *     summary: Get all publications for her id
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -72,7 +72,8 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
+ *           format: uuid
  *           minimum: 1
  *         description: user id
  *     responses:
@@ -96,7 +97,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications:
  *   get:
- *     summary: Get user information
+ *     summary: Get all publications 
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -121,12 +122,12 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications:
  *   post:
- *     summary: Get all publica into the app
+ *     summary: post a publications into the app
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       description: To register a new user you need a some parameters, for example
+ *       description: To register a new publication you need a some parameters, for example
  *       required: true
  *       content:
  *         application/json:
@@ -155,7 +156,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications/{id}/vote:
  *   post:
- *     summary: Get all publica into the app
+ *     summary: post a publication for her id and vote
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -164,19 +165,13 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
- *           minimum: 1
- *         description: user id
- *       - in: path
- *         name: vote
- *         required: false
- *         schema:
  *           type: string
  *           format: uuid
+ *           minimum: 1
  *         description: user id
  *     responses:
  *       200:
- *         description: This is your user information
+ *         description: This is your publication
  *         content:
  *           application/json:
  *             schema:

@@ -1,14 +1,14 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const passport = require('passport');
-
+const authConfig = require('../database/config/auth');
 const UserServices = require('../src/services/user.services');
 
 const userServices = new UserServices();
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
-    secretOrKey: 'ac4d3ml0'
+    secretOrKey: authConfig.secret
 };
 
 passport.use(

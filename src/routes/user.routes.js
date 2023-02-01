@@ -216,5 +216,4 @@ router.get('/:id/publications', passportJWT.authenticate('jwt', { session: false
 router.put('/:id', passportJWT.authenticate('jwt', { session: false }), userMiddleware, updateUser);
 router.delete('/:id', removeUser);
 
-
 module.exports = router;

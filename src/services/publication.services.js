@@ -18,9 +18,21 @@ class PublicationServices {
         }
 
         //No sabemos para que funciona esa parte del codigo.
-        const { title } = query;
+        const { title, tags } = query;
+
         if (title) {
             options.where.name = { [Op.iLike]: `%${title}%` };
+        }
+
+        if (tags) {
+            let tagsIDs = tags.split(",")
+            options.include.push({ // El options que les di en el ejemplo 
+                model: models.Tags,
+                as: 'tags',
+                required: true,
+                where: { id: tagsIDs },
+                through: { attributes: [] }
+            })
         }
 
         //Necesario para el findAndCountAll de Sequelize
@@ -58,10 +70,11 @@ class PublicationServices {
             return publication;
         }
     }
-    async createPublication({ title, description, content, picture, city_id, img_url, publication_type_id }, profile_id) {
+    async createPublication({ title, description, content, picture, city_id, img_url, publication_type_id, tags }, profile_id) {
         const transaction = await models.sequelize.transaction();
+        const tags_array = tags.split(",");
         try {
-            let newData = await models.publications.create({
+            let newPublication = await models.publications.create({
                 id: uuid.v4(),
                 profile_id,
                 title,
@@ -73,10 +86,24 @@ class PublicationServices {
                 publication_type_id
             }, { transaction });
 
+            let tags = await models.tags.findAll({
+                where: {
+                    id: tags_array
+                },
+                attributes: ['id'],
+                raw: true,
+                transaction
+            })
+            if (tags.length > 0) {
+                let findedTags = tags.map(tag => tag['id'])
+                await newPublication.setTags(findedTags, { transaction })
+            }
+
             await transaction.commit();
-            return newData;
+            return newPublication;
         } catch (error) {
             await transaction.rollback();
+            console.log(error);
             throw error;
         }
     }

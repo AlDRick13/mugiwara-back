@@ -51,11 +51,11 @@ const changePassword = async (id, newPassword) => {
         const userByEmail = await userService.getUserOr404(id)
         const idtokenDecoded = jwt.verify(userByEmail.token, authConfig.secret)
 
-
         if (id == idtokenDecoded.id) {
             const data = userService.updatePassword(id, newPassword)
             return data
         }
+
         return null
     } catch (error) {
         return error

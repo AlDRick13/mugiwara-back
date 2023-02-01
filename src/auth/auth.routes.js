@@ -95,7 +95,7 @@
  * /api/v1/auth/signup:
  *   post:
  *     summary: Register a new user into the app
- *     tags: [Auth. Register and Login]
+ *     tags: [Auth]
  *     requestBody:
  *       description: To register a new user you need a some parameters, for example
  *       required: true
@@ -126,7 +126,7 @@
  * /api/v1/auth/login:
  *   post:
  *     summary: Login a user into the app
- *     tags: [Auth. Register and Login]
+ *     tags: [Auth]
  *     requestBody:
  *       description: To do login you need a some parameters, for example
  *       required: true
@@ -162,7 +162,7 @@
  * /api/v1/auth/user-info:
  *   get:
  *     summary: Get user information
- *     tags: [Auth. Register and Login]
+ *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
  *     responses:

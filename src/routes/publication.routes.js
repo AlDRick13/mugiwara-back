@@ -23,6 +23,10 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *     publicationRegister:
  *       type: object
  *       properties:
+ *         profile_id:
+ *           type: string 
+ *           format: uuid
+ *           example: ADSD2-DDSDD2-SFDF4-FGFG5
  *         title:
  *           type: string
  *           example: noticia
@@ -37,9 +41,29 @@ const passportJWT = require('../../middlewares/auth.middleware');
 
 /**
  * @openapi
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:            
+ *       type: apiKey
+ *       in: header
+ *       name: Authorization
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     Votes:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: adds-dfer2-ddff-ddf3
+ *        
+ */
+
+/**
+ * @openapi
  * /api/v1/publications/{id}:
  *   get:
- *     summary: Get all publications_types from user
+ *     summary: Get all publications for her id
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -48,7 +72,8 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
+ *           format: uuid
  *           minimum: 1
  *         description: user id
  *     responses:
@@ -72,7 +97,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications:
  *   get:
- *     summary: Get user information
+ *     summary: Get all publications 
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -97,12 +122,12 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications:
  *   post:
- *     summary: Register a new user into the app
+ *     summary: post a publications into the app
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       description: To register a new user you need a some parameters, for example
+ *       description: To register a new publication you need a some parameters, for example
  *       required: true
  *       content:
  *         application/json:
@@ -126,6 +151,43 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *     
  *
  */
+
+/**
+ * @openapi
+ * /api/v1/publications/{id}/vote:
+ *   post:
+ *     summary: post a publication for her id and vote
+ *     tags: [Publication]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *           minimum: 1
+ *         description: user id
+ *     responses:
+ *       200:
+ *         description: This is your publication
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *     
+ *
+ */
+
 const {
     addVote
 } = require('../controllers/vote.controllers');

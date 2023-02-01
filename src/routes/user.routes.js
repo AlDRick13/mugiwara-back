@@ -24,14 +24,3 @@ router.delete('/:id', removeUser);
 
 
 module.exports = router;
-
-router.get('/', passportJWT.authenticate('jwt', { session: false }), getUsers);
-router.get('/:id', passportJWT.authenticate('jwt', { session: false }), getUser);
-router.get('/:id/votes', passportJWT.authenticate('jwt', { session: false }), getVotesByUser);
-router.get('/:id/publications', passportJWT.authenticate('jwt', { session: false }), getPublicationsByUser);
-
-router.put('/:id', passportJWT.authenticate('jwt', { session: false }), userMiddleware, updateUser);
-router.delete('/:id', removeUser);
-
-
-module.exports = router;

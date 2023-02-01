@@ -1,6 +1,3 @@
-
-
-
 const userMiddleware = (req, res, next) => {
 
     if (req.user.id === req.params.id) {

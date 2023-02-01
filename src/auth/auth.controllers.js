@@ -53,17 +53,23 @@ const postLogin = (request, response, next) => {
     }
 };
 
-// const getUserInfo = async (request, response, next) => {
-//     try {
-//         let {id} = request.body;
-//         let  user = await userServices.getUser()
+const postCreateTokenChangePassword = async (request, response, next) => {
+    const { email } = request.body;
+    let userWithToken = await authServices.createTokenChangePassword(email);
+    return response.json({ results: userWithToken });
+};
 
-//     } catch (error) {
+const postChangePassword = async (request, response, next) => {
+    const { id } = request.params;
+    const { password } = request.body;
 
-//     }
-// }
+    let userWithToken = await authServices.changePassword(id, password);
+    return response.json({ results: userWithToken });
+};
 
 module.exports = {
     postLogin,
-    postSignup
+    postSignup,
+    postCreateTokenChangePassword,
+    postChangePassword
 };

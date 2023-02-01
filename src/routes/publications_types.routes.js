@@ -6,7 +6,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications-types/{id}:
  *   get:
- *     summary: Get all publications_types from user
+ *     summary: Get publications_types by id
  *     tags: [Publication_Type]
  *     security:
  *       - bearerAuth: []
@@ -17,7 +17,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *         schema:
  *           type: integer
  *           minimum: 1
- *         description: user id
+ *         description: publication id
  *     responses:
  *       200:
  *         description: OK
@@ -39,13 +39,13 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications-types:
  *   get:
- *     summary: Get user information
+ *     summary: Get all publication types
  *     tags: [Publication_Type]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: This is your user information
+ *         description: ok
  *         content:
  *           application/json:
  *             schema:

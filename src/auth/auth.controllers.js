@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const authServices = require('./auth.services');
 const UserServices = require('../services/user.services');
+const authConfig = require('../../database/config/auth');
 
 const userServices = new UserServices();
 
@@ -27,7 +28,9 @@ const postLogin = (request, response, next) => {
                         profile_id: data.profile[0].id,
                         email: data.email,
                         role: data.profile[0].role.name
-                    }, 'ac4d3ml0');
+                    }, authConfig.secret, {
+                        expiresIn: authConfig.expires
+                    });
 
                     response.status(200).json({
                         message: 'Correct Credentials!',

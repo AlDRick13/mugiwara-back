@@ -126,6 +126,50 @@ class UserServices {
       throw error;
     }
   }
+
+  async updateUserToken(email, token) {
+    const transaction = await models.sequelize.transaction();
+    try {
+      const user = await models.Users.findOne({
+        where: {
+          email: email
+        }
+      });
+
+      if (!user) throw new CustomError('Not found user', 404, 'Not Found');
+
+      let updatedUser = await user.update({
+        token
+      }, { transaction });
+
+      await transaction.commit();
+      return updatedUser;
+
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  }
+
+  async updatePassword(id, newPassword) {
+    const transaction = await models.sequelize.transaction();
+    try {
+      let user = await models.Users.findByPk(id);
+
+      if (!user) throw new CustomError('Not found user', 404, 'Not Found');
+      let updatedUser = await user.update({
+        password: hashPassword(newPassword),
+        token: ""
+      }, { transaction });
+      await transaction.commit();
+
+      return updatedUser;
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  }
+
   async removeUser(id) {
     const transaction = await models.sequelize.transaction();
     try {

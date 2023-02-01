@@ -161,7 +161,7 @@
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: This is your user information
+ *         description: ok
  *         content:
  *           application/json:
  *             schema:

@@ -1,6 +1,31 @@
 /**
  * @openapi
  * components:
+ *   schemas:
+ *     user:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com
+ *         password:
+ *           type: string
+ *           example: 1234 
+ *     login:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com  
+ * 
+ */
+
+
+
+
+/**
+ * @openapi
+ * components:
  *   securitySchemes:
  *     bearerAuth:            
  *       type: apiKey
@@ -50,7 +75,7 @@
  *           example: 1
  *         image_url:
  *           type: string
- *           example: "Hola chula"
+ *           example: "img.com/tony.jpg"
  *         code_phone:
  *           type: string
  *           example: "111121111"
@@ -62,28 +87,6 @@
  *           example: 1
  * 
  *  
- */
-
-/**
- * @openapi
- * components:
- *   schemas:
- *     user:
- *       type: object
- *       properties:
- *         email:
- *           type: string
- *           example: tony@gmail.com
- *         password:
- *           type: string
- *           example: 1234 
- *     login:
- *       type: object
- *       properties:
- *         email:
- *           type: string
- *           example: tony@gmail.com  
- * 
  */
 
 
@@ -112,9 +115,8 @@
  *                   type: string
  *                   example: OK
  *                 data:
- *                   type: array
  *                   items:
- *                     $ref: "#/components/schemas/users"
+ *                     $ref: "#/components/schemas/register"
  *     
  *
  */
@@ -144,10 +146,14 @@
  *                   type: string
  *                   example: OK
  *                 data:
- *                   type: array
- *                   items:
- *                     $ref: "#/components/schemas/login"
- *     
+ *                   type: object
+ *                   properties:
+ *                      message:
+ *                          type: string
+ *                          example: Correct Credentials!
+ *                      token:
+ *                          type: string
+ *                          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRjM2E5NTdkLTQ0OGItNDc2MS1hZDdjLWZlNmUwY2FkMTk3NyIsInByb2ZpbGVfaWQiOiI1MzJiNGY4ZS01NzA3LTRmMjAtOGY4Yi04NDQ1ZGRiNjcwMDgiLCJlbWFpbCI6InRvbnlAZ21haWwuY29tIiwicm9sZSI6InB1YmxpYyIsImlhdCI6MTY3NTI3NzI5MywiZXhwIjoxNjc1MzYzNjkzfQ.x2sCvmzSxplfAq3z6m3f64jkpqYDzigJ7iHksAHugPE  *     
  *
  */
 

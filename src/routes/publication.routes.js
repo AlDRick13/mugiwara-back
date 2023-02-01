@@ -23,6 +23,10 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *     publicationRegister:
  *       type: object
  *       properties:
+ *         profile_id:
+ *           type: string 
+ *           format: uuid
+ *           example: ADSD2-DDSDD2-SFDF4-FGFG5
  *         title:
  *           type: string
  *           example: noticia
@@ -32,6 +36,26 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *         publication_type_id:
  *           type: integer
  *           example: 1
+ *        
+ */
+
+/**
+ * @openapi
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:            
+ *       type: apiKey
+ *       in: header
+ *       name: Authorization
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     Votes:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: adds-dfer2-ddff-ddf3
  *        
  */
 
@@ -97,7 +121,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications:
  *   post:
- *     summary: Register a new user into the app
+ *     summary: Get all publica into the app
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -126,6 +150,49 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *     
  *
  */
+
+/**
+ * @openapi
+ * /api/v1/publications/{id}/vote:
+ *   post:
+ *     summary: Get all publica into the app
+ *     tags: [Publication]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: user id
+ *       - in: path
+ *         name: vote
+ *         required: false
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: user id
+ *     responses:
+ *       200:
+ *         description: This is your user information
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *     
+ *
+ */
+
 const {
     addVote
 } = require('../controllers/vote.controllers');

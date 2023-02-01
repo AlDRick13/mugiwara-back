@@ -10,10 +10,16 @@ const options = {
       version: "1.0.0",
       description: "Proyecto de Academlo",
     },
+    server: [
+      {
+        url: 'http://localhost:8000'
+      }
+    ]
   },
   apis: [
     "./src/auth/auth.routes.js",
     "./src/routes/publications_types.routes.js",
+    "./src/routes/publication.routes.js",
     "./database/models/users.js",
 
   ],

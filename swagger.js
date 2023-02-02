@@ -20,6 +20,9 @@ const options = {
     "./src/auth/auth.routes.js",
     "./src/routes/publications_types.routes.js",
     "./src/routes/publication.routes.js",
+    "./src/routes/user.routes.js",
+    "./src/routes/city.routes.js",
+    "./src/routes/state.routes.js",
     "./database/models/users.js",
 
   ],

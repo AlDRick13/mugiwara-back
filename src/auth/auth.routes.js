@@ -1,6 +1,31 @@
 /**
  * @openapi
  * components:
+ *   schemas:
+ *     user:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com
+ *         password:
+ *           type: string
+ *           example: 1234 
+ *     login:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com  
+ * 
+ */
+
+
+
+
+/**
+ * @openapi
+ * components:
  *   securitySchemes:
  *     bearerAuth:            
  *       type: apiKey
@@ -50,7 +75,7 @@
  *           example: 1
  *         image_url:
  *           type: string
- *           example: "Hola chula"
+ *           example: "img.com/tony.jpg"
  *         code_phone:
  *           type: string
  *           example: "111121111"
@@ -64,35 +89,13 @@
  *  
  */
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     user:
- *       type: object
- *       properties:
- *         email:
- *           type: string
- *           example: tony@gmail.com
- *         password:
- *           type: string
- *           example: 1234 
- *     login:
- *       type: object
- *       properties:
- *         email:
- *           type: string
- *           example: tony@gmail.com  
- * 
- */
-
 
 /**
  * @openapi
  * /api/v1/auth/signup:
  *   post:
  *     summary: Register a new user into the app
- *     tags: [Auth. Register and Login]
+ *     tags: [Auth]
  *     requestBody:
  *       description: To register a new user you need a some parameters, for example
  *       required: true
@@ -112,9 +115,8 @@
  *                   type: string
  *                   example: OK
  *                 data:
- *                   type: array
  *                   items:
- *                     $ref: "#/components/schemas/users"
+ *                     $ref: "#/components/schemas/register"
  *     
  *
  */
@@ -124,7 +126,7 @@
  * /api/v1/auth/login:
  *   post:
  *     summary: Login a user into the app
- *     tags: [Auth. Register and Login]
+ *     tags: [Auth]
  *     requestBody:
  *       description: To do login you need a some parameters, for example
  *       required: true
@@ -144,10 +146,14 @@
  *                   type: string
  *                   example: OK
  *                 data:
- *                   type: array
- *                   items:
- *                     $ref: "#/components/schemas/login"
- *     
+ *                   type: object
+ *                   properties:
+ *                      message:
+ *                          type: string
+ *                          example: Correct Credentials!
+ *                      token:
+ *                          type: string
+ *                          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRjM2E5NTdkLTQ0OGItNDc2MS1hZDdjLWZlNmUwY2FkMTk3NyIsInByb2ZpbGVfaWQiOiI1MzJiNGY4ZS01NzA3LTRmMjAtOGY4Yi04NDQ1ZGRiNjcwMDgiLCJlbWFpbCI6InRvbnlAZ21haWwuY29tIiwicm9sZSI6InB1YmxpYyIsImlhdCI6MTY3NTI3NzI5MywiZXhwIjoxNjc1MzYzNjkzfQ.x2sCvmzSxplfAq3z6m3f64jkpqYDzigJ7iHksAHugPE  *     
  *
  */
 
@@ -156,7 +162,7 @@
  * /api/v1/auth/user-info:
  *   get:
  *     summary: Get user information
- *     tags: [Auth. Register and Login]
+ *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -179,13 +185,14 @@
 const express = require('express');
 const router = express.Router();
 const { getUserByTokenId } = require('../controllers/user.controllers');
-const { postLogin, postSignup } = require('./auth.controllers');
+const { postLogin, postSignup, postCreateTokenChangePassword, postChangePassword } = require('./auth.controllers');
 const passportJWT = require('../../middlewares/auth.middleware');
 
 
 router.post('/signup', postSignup);
 router.post('/login', postLogin);
+router.post('/change-password', postCreateTokenChangePassword)
+router.post('/change-password/:id', postChangePassword)
 router.get('/user-info', passportJWT.authenticate('jwt', { session: false }), getUserByTokenId);
-
 
 module.exports = router;

@@ -26,7 +26,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *         profile_id:
  *           type: string 
  *           format: uuid
- *           example: ADSD2-DDSDD2-SFDF4-FGFG5
+ *           example: 0c904648-f05d-4ecd-9e40-2cf2fb71a7fd
  *         title:
  *           type: string
  *           example: noticia
@@ -36,6 +36,9 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *         publication_type_id:
  *           type: integer
  *           example: 1
+ *         tags:
+ *           type: string
+ *           example: 1,2
  *        
  */
 
@@ -63,7 +66,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications/{id}:
  *   get:
- *     summary: Get all publications for her id
+ *     summary: Get publication by id
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -75,7 +78,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *           type: string
  *           format: uuid
  *           minimum: 1
- *         description: user id
+ *         description: publication id
  *     responses:
  *       200:
  *         description: OK
@@ -156,7 +159,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications/{id}/vote:
  *   post:
- *     summary: post a publication for her id and vote
+ *     summary: vote and delete vote for an specific publication
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -168,7 +171,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *           type: string
  *           format: uuid
  *           minimum: 1
- *         description: user id
+ *         description: publication id
  *     responses:
  *       200:
  *         description: This is your publication

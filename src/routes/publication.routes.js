@@ -63,7 +63,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications/{id}:
  *   get:
- *     summary: Get all publications for her id
+ *     summary: Get all publications by id
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []
@@ -156,7 +156,7 @@ const passportJWT = require('../../middlewares/auth.middleware');
  * @openapi
  * /api/v1/publications/{id}/vote:
  *   post:
- *     summary: post a publication for her id and vote
+ *     summary: post a publication by id and vote
  *     tags: [Publication]
  *     security:
  *       - bearerAuth: []

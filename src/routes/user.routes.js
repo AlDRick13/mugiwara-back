@@ -116,9 +116,9 @@ const { getPublicationsByUser } = require('../controllers/publication.controller
 
 /**
 * @openapi
-* /api/v1/users/{id}/vote:
+* /api/v1/users/{id}/votes:
 *   get:
-*     summary: Get user by id and vote
+*     summary: Get user's votes by given id
 *     tags: [Users]
 *     security:
 *       - bearerAuth: []
@@ -152,7 +152,7 @@ const { getPublicationsByUser } = require('../controllers/publication.controller
 * @openapi
 * /api/v1/users/{id}/publications:
 *   get:
-*     summary: Get user by id and publications 
+*     summary: Get specific user publications by id 
 *     tags: [Users]
 *     security:
 *       - bearerAuth: []

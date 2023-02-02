@@ -28,6 +28,8 @@ class UserServices {
     options.distinct = true;
 
     const users = await models.Users.findAndCountAll(options);
+    if (!users) throw new CustomError('Not found users', 404, 'Create user');
+
     return users;
   }
 
@@ -49,6 +51,7 @@ class UserServices {
         }
       ]
     });
+    if (!data) throw new CustomError('Not found email', 404, 'Not ound');
 
     return data;
   }
@@ -105,6 +108,8 @@ class UserServices {
   //Return not an Instance raw:true | we also can converted to Json instead
   async getUser(id) {
     let user = await models.Users.findByPk(id, { raw: true });
+    if (!user) throw new CustomError('Not found User', 404, 'Not Found');
+
     return user;
   }
   async updateUser(id, { first_name, last_name, username }) {

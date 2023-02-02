@@ -1,7 +1,67 @@
 const express = require('express');
 const router = express.Router();
-
 const passportJWT = require('../../middlewares/auth.middleware');
+
+/**
+ * @openapi
+ * /api/v1/publications-types/{id}:
+ *   get:
+
+ *     summary: Get publications_types by id
+ *     tags: [Publication_Type]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: publication id
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items: {}
+ *   
+ */
+
+/**
+ * @openapi
+ * /api/v1/publications-types:
+ *   get:
+
+ *     summary: Get all publication types
+ *     tags: [Publication_Type]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+
+ *         description: ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ */
 
 const {
   getPublicationTypes,

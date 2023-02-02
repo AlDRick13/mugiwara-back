@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const authServices = require('./auth.services');
 const UserServices = require('../services/user.services');
+const authConfig = require('../../database/config/auth');
 
 const userServices = new UserServices();
 
@@ -27,7 +28,9 @@ const postLogin = (request, response, next) => {
                         profile_id: data.profile[0].id,
                         email: data.email,
                         role: data.profile[0].role.name
-                    }, 'ac4d3ml0');
+                    }, authConfig.secret, {
+                        expiresIn: authConfig.expires
+                    });
 
                     response.status(200).json({
                         message: 'Correct Credentials!',
@@ -50,17 +53,23 @@ const postLogin = (request, response, next) => {
     }
 };
 
-// const getUserInfo = async (request, response, next) => {
-//     try {
-//         let {id} = request.body;
-//         let  user = await userServices.getUser()
+const postCreateTokenChangePassword = async (request, response, next) => {
+    const { email } = request.body;
+    let userWithToken = await authServices.createTokenChangePassword(email);
+    return response.json({ results: userWithToken });
+};
 
-//     } catch (error) {
+const postChangePassword = async (request, response, next) => {
+    const { id } = request.params;
+    const { password } = request.body;
 
-//     }
-// }
+    let userWithToken = await authServices.changePassword(id, password);
+    return response.json({ results: userWithToken });
+};
 
 module.exports = {
     postLogin,
-    postSignup
+    postSignup,
+    postCreateTokenChangePassword,
+    postChangePassword
 };

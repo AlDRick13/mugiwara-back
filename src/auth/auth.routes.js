@@ -191,8 +191,8 @@ const passportJWT = require('../../middlewares/auth.middleware');
 
 router.post('/signup', postSignup);
 router.post('/login', postLogin);
-router.post('/change-password', postCreateTokenChangePassword)
-router.post('/change-password/:id', postChangePassword)
+router.post('/change-password', postCreateTokenChangePassword);
+router.put('/change-password/:id', postChangePassword);
 router.get('/user-info', passportJWT.authenticate('jwt', { session: false }), getUserByTokenId);
 
 module.exports = router;

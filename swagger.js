@@ -23,6 +23,7 @@ const options = {
     "./src/routes/user.routes.js",
     "./src/routes/city.routes.js",
     "./src/routes/state.routes.js",
+    "./src/routes/tag.routes.js",
     "./database/models/users.js",
 
   ],

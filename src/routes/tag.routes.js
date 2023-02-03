@@ -67,7 +67,7 @@ const {
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: This is your user information
+ *         description: This is your tag information
  *         content:
  *           application/json:
  *             schema:
@@ -91,7 +91,7 @@ const {
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       description: To register a new publication you need a some parameters, for example
+ *       description: To register a new tag you need a some parameters, for example
  *       required: true
  *       content:
  *         application/json:
@@ -117,33 +117,66 @@ const {
  */
 
 /**
-* @openapi
-* /api/v1/tags/{id}:
-*   put:
-*     summary: update tag by id
-*     tags: [Tags]
-*     security:
-*       - bearerAuth: []
-*     parameters:
-*       - in: path
-*         name: id
-*         required: true
-*         schema:
-*           type: integer
-*           minimum: 1
-*         description: user id
-*     requestBody:
-*       description: To update a user you need a some parameters, for example
-*       required: true
-*       content:
-*         application/json:
-*           schema:
-*             $ref: "#/components/schemas/tags"
-*     responses:
-*       201:
-*         description: OK
-*
+ * @openapi
+ * /api/v1/tags/{id}:
+ *   put:
+ *     summary: update tag by id
+ *     tags: [Tags]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: tag id
+ *     requestBody:
+ *       description: To update tag you need a some parameters, for example
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/tags"
+ *     responses:
+ *       201:
+ *         description: OK
+ *
 */
+
+/**
+ * @openapi
+ * /api/v1/tags/{id}:
+ *   delete:
+ *     summary: delete a tag by id 
+ *     tags: [Tags]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: tag id
+ *     responses:
+ *       200:
+ *         description: delete tag
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ */
 
 router.get('/', passportJWT.authenticate('jwt', { session: false }), getTags);
 router.post('/', passportJWT.authenticate('jwt', { session: false }), addTag);

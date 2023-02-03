@@ -1,9 +1,8 @@
 version: "3.7"
 services:
-  
-  team_3_API:
+  team_3_api:
     build: .
-    image: team_3_API_image
+    image: team_3_api_image
     container_name: team_3_API_container
     ports:
       - "8003:8003"
@@ -15,7 +14,7 @@ services:
   team_3_postgres_app:
     image: postgres
     container_name: team_3_postgres_container
-    ports: 
+    ports:
       - "5433:5432"
     env_file:
       - .env.db.docker

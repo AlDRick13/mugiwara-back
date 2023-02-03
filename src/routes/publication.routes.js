@@ -95,6 +95,39 @@ const passportJWT = require('../../middlewares/auth.middleware');
  *                   items: {}
  *   
  */
+/**
+ * @openapi
+ * /api/v1/publications/{id}:
+ *   delete:
+ *     summary: Delete publication by id
+ *     tags: [Publication]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *           minimum: 1
+ *         description: publication id
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items: {}
+ *   
+ */
 
 /**
  * @openapi

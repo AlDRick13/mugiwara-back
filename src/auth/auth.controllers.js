@@ -56,15 +56,31 @@ const postLogin = (request, response, next) => {
 const postCreateTokenChangePassword = async (request, response, next) => {
     const { email } = request.body;
     let userWithToken = await authServices.createTokenChangePassword(email);
-    return response.json({ results: userWithToken });
+    if (userWithToken) {
+        return response.status(200).json({ message: 'Succes. Token created succesfully' });
+
+    } else {
+        return response.status(404).json({ message: 'Invalid email' });
+
+    }
 };
 
 const postChangePassword = async (request, response, next) => {
     const { id } = request.params;
     const { password } = request.body;
 
+    if (!password) {
+        return response.status(404).json({ message: 'Missing field password' });
+    }
     let userWithToken = await authServices.changePassword(id, password);
-    return response.json({ results: userWithToken });
+    if (userWithToken.name === 'SequelizeDatabaseError') {
+        return response.status(400).json({ message: 'Invalid Id. Id must be the same as logged user id' });
+
+    } if (userWithToken.name === 'JsonWebTokenError') {
+        return response.status(401).json({ message: 'Acces Denied. Cannot change a password without have created a change password token first' });
+
+    }
+    return response.status(200).json({ message: 'Password changed successfully' });
 };
 
 module.exports = {

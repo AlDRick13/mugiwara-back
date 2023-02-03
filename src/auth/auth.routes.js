@@ -89,6 +89,27 @@
  *  
  */
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     new-change-password:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com
+ *         password:
+ *           type: string
+ *           example: 1234 
+ *     change-password:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: tony@gmail.com  
+ * 
+ */
 
 /**
  * @openapi
@@ -180,6 +201,73 @@
  *                   type: array
  *                   items:
  *                     type: object
+ */
+
+/**
+ * @openapi
+ * /api/v1/auth/change-password:
+ *   post:
+ *     summary: post change-password 
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ */
+
+/**
+ * @openapi
+ * /api/v1/auth/change-password/{id}:
+ *   put:
+ *     summary: change-password from user 
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *           minimum: 1
+ *         description: tag id
+ *     requestBody:
+ *       description: To change-password from user  you need a some parameters, for example
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/new-change-password"
+ *     responses:
+ *       201:
+ *         description: created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   items:
+ *                     $ref: "#/components/schemas/change-password"
+ *     
+ *
  */
 
 const express = require('express');

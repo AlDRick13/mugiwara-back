@@ -6,9 +6,9 @@ const options = {
   definition: {
     openapi: "3.0.0", // standar open Api que estamos usando
     info: {
-      title: "Aplication",
+      title: "Para Cuando? API",
       version: "1.0.0",
-      description: "Proyecto de Academlo",
+      description: "By Evertz, Tony and Aldo",
     },
     server: [
       {

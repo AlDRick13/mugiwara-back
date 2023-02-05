@@ -13,8 +13,8 @@ const getRoles = async (request, response, next) => {
         query.offset = offset;
 
         let roles = await rolesService.findAndCount(query);
-        const results = getPagingData(roles, page, limit);
-        return response.json({ results });
+        const result = getPagingData(roles, page, limit);
+        return response.json({ result });
 
     } catch (error) {
         next(error);

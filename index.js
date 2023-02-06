@@ -49,6 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 Routes
 
 */
+swaggerDocs(app, PORT);
 
 routerModels(app);
 routerErrorHandler(app);
@@ -69,5 +70,4 @@ app.get('/', ({ res }) => {
 
 app.listen(PORT, () => {
   console.log(`Server on PORT: ${PORT}`);
-  swaggerDocs(app, PORT);
 });

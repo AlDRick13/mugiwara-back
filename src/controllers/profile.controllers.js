@@ -13,8 +13,8 @@ const getProfiles = async (request, response, next) => {
         query.offset = offset;
 
         let profiles = await profilesService.findAndCount(query);
-        const results = getPagingData(profiles, page, limit);
-        return response.json({ results });
+        const result = getPagingData(profiles, page, limit);
+        return response.json({ result });
 
     } catch (error) {
         next(error);
@@ -25,7 +25,7 @@ const addProfile = async (req, res, next) => {
     try {
         const body = req.body;
         let profile = await profilesService.createProfile(body);
-        return res.status(201).json({ results: profile });
+        return res.status(201).json({ result: profile });
     } catch (error) {
         next(error);
     }
@@ -35,7 +35,7 @@ const getProfile = async (request, response, next) => {
     try {
         let { id } = request.params;
         let profile = await profilesService.getProfileOr404(id);
-        return response.json({ results: profile });
+        return response.json({ result: profile });
     } catch (error) {
         next(error);
     }
@@ -46,7 +46,7 @@ const updateProfile = async (request, response, next) => {
         let { id } = request.params;
         let { body } = request;
         let profile = await profilesService.updateProfile(id, body);
-        return response.json({ results: profile });
+        return response.json({ result: profile });
     } catch (error) {
         next(error);
     }
@@ -56,7 +56,7 @@ const removeProfile = async (request, response, next) => {
     try {
         let { id } = request.params;
         let profile = await profilesService.removeProfile(id);
-        return response.json({ results: profile, message: 'removed' });
+        return response.json({ result: profile, message: 'removed' });
     } catch (error) {
         next(error);
     }

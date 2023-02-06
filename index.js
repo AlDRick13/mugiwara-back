@@ -3,10 +3,13 @@ const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
 const routerModels = require('./utils/models.router');
+const routerErrorHandler = require('./src/routes/errorhandler.routes');
+
 const swaggerDocs = require('./swagger');
 
 const app = express();
-app.use(express.json());
+// app.use(express.json());
+
 
 const PORT = process.env.PORT || 8000;
 
@@ -39,12 +42,17 @@ if (process.env.NODE_ENV === 'production') {
 /*
 Accept Json & form-urlencoded
 */
-// app.use(express.json());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /*
 Routes
+
 */
+swaggerDocs(app, PORT);
+
+routerModels(app);
+routerErrorHandler(app);
 
 /* 
     Tell everyone the state of your api
@@ -56,9 +64,10 @@ app.get('/', ({ res }) => {
   });
 });
 
-routerModels(app);
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server on PORT: ${PORT}`);
-  swaggerDocs(app, PORT);
 });

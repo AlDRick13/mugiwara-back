@@ -25,13 +25,13 @@ const getUserByTokenId = async (request, response, next) => {
   try {
     console.log(request.user);
     const tokenId = request.user.id;
-    let users = await userServices.getUserOr404(tokenId);
+    let user = await userServices.getUserOr404(tokenId);
     return response.json({
-      "users_id": users.id,
-      "first_name": users.first_name,
-      "last_name": users.last_name,
-      "email": users.email,
-      "profile": users.profile[0]
+      "user_id": user.id,
+      "first_name": user.first_name,
+      "last_name": user.last_name,
+      "email": user.email,
+      "profile": user.profile[0]
     });
   } catch (error) {
     next(error);
@@ -52,8 +52,8 @@ const addUser = async (request, response, next) => {
 const getUser = async (request, response, next) => {
   try {
     let { id } = request.params;
-    let users = await userServices.getUserOr404(id);
-    return response.json({ results: users });
+    let user = await userServices.getUserOr404(id);
+    return response.json({ results: user });
   } catch (error) {
     next(error);
   }

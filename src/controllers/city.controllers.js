@@ -13,8 +13,8 @@ const getCities = async (request, response, next) => {
         query.offset = offset;
 
         let data = await cityService.findAndCount(query);
-        const results = getPagingData(data, page, limit);
-        return response.json({ results });
+        const result = getPagingData(data, page, limit);
+        return response.json({ result });
 
     } catch (error) {
         next(error);
@@ -27,7 +27,7 @@ const addCity = async (req, res, next) => {
     try {
         // let { body } = req;
         let data = await cityService.createCity(body);
-        return res.status(201).json({ results: data });
+        return res.status(201).json({ result: data });
     } catch (error) {
         next(error);
     }
@@ -37,7 +37,7 @@ const getCity = async (request, response, next) => {
     try {
         let { id } = request.params;
         let data = await cityService.getCityOr404(id);
-        return response.json({ results: data });
+        return response.json({ result: data });
     } catch (error) {
         next(error);
     }
@@ -48,7 +48,7 @@ const PutCity = async (request, response, next) => {
         let { id } = request.params;
         let { body } = request;
         let data = await cityService.updateCity(id, body);
-        return response.json({ results: data });
+        return response.json({ result: data });
     } catch (error) {
         next(error);
     }
@@ -58,7 +58,7 @@ const DeleteCity = async (request, response, next) => {
     try {
         let { id } = request.params;
         let data = await cityService.removeCity(id);
-        return response.json({ results: data, message: 'removed' });
+        return response.json({ result: data, message: 'removed' });
     } catch (error) {
         next(error);
     }

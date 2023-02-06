@@ -13,7 +13,7 @@ const getPublicationTypes = async (request, response, next) => {
         query.offset = offset;
 
         let publicationsTypes = await publicationsTypesService.findAndCount(query);
-        const results = getPagingData(publicationsTypes, page, limit);
+        const result = getPagingData(publicationsTypes, page, limit);
         return response.json({ results: results });
 
     } catch (error) {
@@ -25,7 +25,7 @@ const addPublicationType = async (request, response, next) => {
     try {
         const body = request.body;
         let publicationType = await publicationsTypesService.createPublicationType(body);
-        return response.status(201).json({ results: publicationType });
+        return response.status(201).json({ result: publicationType });
     } catch (error) {
         next(error);
     }
@@ -35,7 +35,7 @@ const getPublicationType = async (request, response, next) => {
     try {
         let { id } = request.params;
         let publicationsTypes = await publicationsTypesService.getPublicationTypeOr404(id);
-        return response.json({ results: publicationsTypes });
+        return response.json({ result: publicationsTypes });
     } catch (error) {
         next(error);
     }
@@ -46,7 +46,7 @@ const updatePublicationType = async (request, response, next) => {
         let { id } = request.params;
         let { body } = request;
         let publicationType = await publicationsTypesService.updatePublicationType(id, body);
-        return response.json({ results: publicationType });
+        return response.json({ result: publicationType });
     } catch (error) {
         next(error);
     }

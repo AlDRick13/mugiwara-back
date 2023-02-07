@@ -47,11 +47,9 @@ app.use(express.urlencoded({ extended: true }));
 
 /*
 Routes
-
 */
-swaggerDocs(app, PORT);
-
 routerModels(app);
+swaggerDocs(app, PORT);
 routerErrorHandler(app);
 
 /* 
@@ -63,7 +61,6 @@ app.get('/', ({ res }) => {
     maintenance: false,
   });
 });
-
 
 
 
